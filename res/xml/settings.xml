@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/setting_category_statistics" >
+        <com.braintracker.setting.TargetSetting
+            android:defaultValue="@integer/target_default_value"
+            android:dialogTitle="@string/setting_title_target_statistics"
+            android:key="@string/setting_key_target_statistics"
+            android:summary="@string/setting_summary_target_statistics"
+            android:title="@string/setting_title_target_statistics" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_category_notificatione" >
+        <CheckBoxPreference
+            android:defaultValue="@bool/android_settings_default"
+            android:key="@string/setting_key_android_notificatione"
+            android:summary="@string/setting_summary_android_notifications"
+            android:title="@string/setting_title_android_notifications" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/samsung_settings_default"
+            android:key="@string/setting_key_samsung_notificatione"
+            android:summary="@string/setting_summary_watch_notifications"
+            android:title="@string/setting_title_watch_notifications" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_category_resources" >
+        <CheckBoxPreference
+            android:defaultValue="@bool/youtube_settings_default"
+            android:enabled="false"
+            android:key="@string/setting_key_youtube_resources"
+            android:title="@string/setting_title_youtube_resources" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/facebook_settings_default"
+            android:enabled="false"
+            android:key="@string/setting_key_facebook_resources"
+            android:title="@string/setting_title_facebook_resources" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/twitter_settings_default"
+            android:enabled="false"
+            android:key="@string/setting_key_twitter_resources"
+            android:title="@string/setting_title_twitter_resources" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
