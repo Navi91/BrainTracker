@@ -6,3 +6,6 @@
 /lint.xml
 /proguard-project.txt
 /project.properties
+/.idea/
+/.gradle/
+/gradle/
