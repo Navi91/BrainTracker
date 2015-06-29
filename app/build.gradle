@@ -28,7 +28,7 @@ android {
 dependencies {
     compile 'com.google.http-client:google-http-client-gson:1.19.0'
     compile 'com.google.android.gms:play-services:+'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.1.0'
     compile 'com.android.support:support-v13:20.0.0'
 
     compile('com.mikepenz.materialdrawer:library:0.9.5@aar') {

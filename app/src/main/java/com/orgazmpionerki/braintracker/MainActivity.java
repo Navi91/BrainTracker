@@ -2,11 +2,15 @@ package com.orgazmpionerki.braintracker;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintracker.R;
@@ -166,13 +170,6 @@ public class MainActivity extends ActionBarActivity implements WiFiStateChangeLi
         }
     }
 
-    private void traceResult(Tokens tokens) {
-        Tracer.debug("Got access token: " + tokens.getAccessToken());
-        Tracer.debug("Got refresh token: " + tokens.getRefreshToken());
-        Tracer.debug("Got token type: " + tokens.getTokenType());
-        Tracer.debug("Got expires in: " + tokens.getExpiresIn());
-    }
-
     @Override
     public void onWiFiStateChange() {
         updateFragmentsContent(null);
@@ -202,7 +199,35 @@ public class MainActivity extends ActionBarActivity implements WiFiStateChangeLi
                 getFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
                 break;
             case DRAWER_IDENTIFIER_ABOUT:
+                showAboutDialog();
                 break;
         }
+    }
+
+    private void showAboutDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View aboutView = inflater.inflate(R.layout.about_dialog, null, false);
+        TextView versionTextView = (TextView) aboutView.findViewById(R.id.about_version);
+
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = packageInfo.versionName;
+            versionTextView.setText(version);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(R.string.about_dialog_title);
+        builder.setView(aboutView);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.show();
+    }
+
+    private void traceResult(Tokens tokens) {
+        Tracer.debug("Got access token: " + tokens.getAccessToken());
+        Tracer.debug("Got refresh token: " + tokens.getRefreshToken());
+        Tracer.debug("Got token type: " + tokens.getTokenType());
+        Tracer.debug("Got expires in: " + tokens.getExpiresIn());
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- About Dialog-->
+    <string name="about_dialog_title">О программе</string>
+    <string name="about_version">Версия:</string>
+    <string name="about_app_describe">Приложение для мониторинга мозговой активности.</string>
+    <string name="about_idea">Автор:</string>
+    <string name="about_develop">Разработчики:</string>
+    <string name="about_design">Автор интерфейса:</string>
+    <string name="about_idea_descr">Дмитрий Краснов</string>
+    <string name="about_develop_descr">Дмитрий Краснов</string>
+    <string name="about_design_descr">Валерий Сухотько</string>
+
+</resources>
