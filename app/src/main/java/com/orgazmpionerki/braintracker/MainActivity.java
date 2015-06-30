@@ -26,6 +26,7 @@ import com.orgazmpionerki.braintracker.fragment.BaseFragment;
 import com.orgazmpionerki.braintracker.fragment.ServiceFragment;
 import com.orgazmpionerki.braintracker.fragment.SettingsFragment;
 import com.orgazmpionerki.braintracker.fragment.StatisticsFrament;
+import com.orgazmpionerki.braintracker.fragment.TestFragment;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 import com.orgazmpionerki.braintracker.service.BrainTrackerService;
@@ -83,8 +84,11 @@ public class MainActivity extends ActionBarActivity implements WiFiStateChangeLi
             Preferences.putBeginDate(this, Calendar.getInstance().getTimeInMillis());
         }
 
-        BaseFragment fragment = ServiceFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//        BaseFragment fragment = ServiceFragment.newInstance();
+//        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
+        BaseFragment testFragment = TestFragment.newInstance();
+        getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
 
         mBrainServiceController = new BrainTrackerServiceController();
     }
@@ -177,7 +181,6 @@ public class MainActivity extends ActionBarActivity implements WiFiStateChangeLi
 
     @Override
     public void onChangePoints() {
-        Tracer.debug("ON CHANGE MAIN ACTIVITY");
         updateFragmentsContent(null);
     }
 
