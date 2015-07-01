@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.braintracker.R;
@@ -13,8 +14,11 @@ import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequestListener;
+import com.orgazmpionerki.braintracker.datasource.updaterequest.UpdateRequest;
+import com.orgazmpionerki.braintracker.service.PopupService;
 import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
 import com.orgazmpionerki.braintracker.util.Constants;
+import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
 public class NotificationController implements IUpdateRequestListener {
@@ -39,7 +43,7 @@ public class NotificationController implements IUpdateRequestListener {
     public void onServiceStarted() {
         mDatabase.open();
         UpdateDataManager.getInstance(mContext).addListener(this);
-        updateNotifications();
+        updateNotifications(null);
     }
 
     public void onServiceStopped() {
@@ -76,12 +80,9 @@ public class NotificationController implements IUpdateRequestListener {
         return builder.build();
     }
 
-    private void updateNotifications() {
-        if (!new BrainTrackerServiceController().isServiceRunning(mContext)) {
-            return;
-        }
-
+    private void updateNotifications(IUpdateRequest request) {
         updateAndroidNotification();
+        updatePopupNotification(request);
     }
 
     private void updateAndroidNotification() {
@@ -93,6 +94,27 @@ public class NotificationController implements IUpdateRequestListener {
     private void removeAndroidNotification() {
         NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(Constants.NOTIFICATION_ID);
+    }
+
+    private void updatePopupNotification(IUpdateRequest request) {
+        if (!Preferences.getShowPopupNotification(mContext) || request == null) {
+            return;
+        }
+
+        Bundle requestInfo = request.getInfo();
+
+        if (requestInfo != null && requestInfo.containsKey(UpdateRequest.BUNDLE_BEFORE_POINTS)) {
+            Intent popupIntent = createPopupIntent(requestInfo.getInt(UpdateRequest.BUNDLE_BEFORE_POINTS), getCurrentDayPoints());
+            mContext.startService(popupIntent);
+        }
+    }
+
+    private Intent createPopupIntent(int beforePoints, int afterPoints) {
+        Intent intent = new Intent(mContext, PopupService.class);
+        intent.putExtra(PopupService.EXTRA_BRAIN_POINTS_BEFORE, beforePoints);
+        intent.putExtra(PopupService.EXTRA_BRAIN_POINTS_AFTER, afterPoints);
+
+        return intent;
     }
 
     private String getNotificationMessage() {
@@ -119,37 +141,10 @@ public class NotificationController implements IUpdateRequestListener {
 
     @Override
     public void onUpdateDone(IUpdateRequest request) {
-        updateNotifications();
+        if (!new BrainTrackerServiceController().isServiceRunning(mContext)) {
+            return;
+        }
+
+        updateNotifications(request);
     }
-
-//    public void addListener(OnChangePointsListener listener) {
-//        if (mListeners != null) {
-//            mListeners.add(listener);
-//        } else {
-//            mListeners = new ArrayList<OnChangePointsListener>();
-//            mListeners.add(listener);
-//        }
-//    }
-//
-//    public void removeListener(OnChangePointsListener listener) {
-//        mListeners.remove(listener);
-//
-//        if (mListeners.size() == 0) {
-//            mListeners = null;
-//        }
-//    }
-//
-//    private void notifyAllListeners() {
-//        if (mListeners == null) {
-//            return;
-//        }
-//
-//        for (OnChangePointsListener listener : mListeners) {
-//            if (listener != null) {
-//                listener.onChangePoints();
-//            }
-//        }
-//    }
-
-
 }

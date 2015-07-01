@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.MainActivity;
@@ -22,12 +24,7 @@ import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceControll
 public class TestFragment extends BaseFragment {
     public static final String TAG = "com.braintracker.fargment.test_fragment";
 
-    private AnimationTextView mServiceStatusTextView;
-    private AnimationTextView mPowerButton;
-
-    private ServiceStatusAnimator mServiceStatusAnimator;
-    private PowerButtonAnimator mPowerButtonAnimator;
-    private IBrainServiceController mBrainServiceController;
+    private boolean mFlag = false;
 
     public static TestFragment newInstance() {
         return new TestFragment();
@@ -39,8 +36,7 @@ public class TestFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mBrainServiceController = new BrainTrackerServiceController();
+        super.onCreate(savedInstanceState);;
     }
 
     @Override
@@ -49,8 +45,22 @@ public class TestFragment extends BaseFragment {
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
 
+        final TextSwitcher textSwitcher = (TextSwitcher) layout.findViewById(R.id.text_switcher);
+        textSwitcher.setInAnimation(getActivity(), R.anim.text_slide_in_top);
+        textSwitcher.setOutAnimation(getActivity(), R.anim.text_slide_out_bot);
+        final String start = getResources().getString(R.string.start_service_button);
+        final String stop = getResources().getString(R.string.stop_service_button);
+        textSwitcher.setText(mFlag ? start : stop);
 
         Button testButton = (Button) layout.findViewById(R.id.test_button);
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textSwitcher.setText(mFlag ? start : stop);
+                mFlag = !mFlag;
+            }
+        });
 
         setRetainInstance(true);
         return layout;

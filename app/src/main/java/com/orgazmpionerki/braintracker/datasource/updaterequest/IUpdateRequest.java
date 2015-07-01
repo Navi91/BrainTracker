@@ -1,5 +1,7 @@
 package com.orgazmpionerki.braintracker.datasource.updaterequest;
 
+import android.os.Bundle;
+
 import com.orgazmpionerki.braintracker.datasource.dataresource.IDataResource;
 
 /**
@@ -13,4 +15,6 @@ public interface IUpdateRequest {
     public boolean isSuccess();
 
     public IDataResource getResource();
+
+    public Bundle getInfo();
 }

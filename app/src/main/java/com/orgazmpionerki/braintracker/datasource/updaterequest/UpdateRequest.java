@@ -1,6 +1,7 @@
 package com.orgazmpionerki.braintracker.datasource.updaterequest;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
@@ -14,14 +15,18 @@ import com.orgazmpionerki.braintracker.util.Tracer;
 public class UpdateRequest implements IUpdateRequest {
     private final static String DEBUG_TAG = "update_request_debug";
 
+    public static final String BUNDLE_BEFORE_POINTS = "com.orgazmpionerki.braintracker.datasource.updaterequest.bundle_before_points";
+
     private IDataResource mResource;
     private Context mContext;
     private IUpdateRequestListener mListener;
     private boolean mResult = false;
+    private Bundle mInfoBundle;
 
     public UpdateRequest(Context context, IDataResource resource) {
         mContext = context;
         mResource = resource;
+        mInfoBundle = new Bundle();
     }
 
     public void setListener(IUpdateRequestListener listener) {
@@ -72,6 +77,10 @@ public class UpdateRequest implements IUpdateRequest {
         BrainTrackerDatabase database = new BrainTrackerDatabase(mContext);
         database.open();
 
+        // get points count before request
+        // for notifications
+        mInfoBundle.putInt(BUNDLE_BEFORE_POINTS, database.getBrainPoints(1));
+
         for (IDataElement element : response.getElements()) {
             writeResult |= database.addVideoToWatchHistory(element);
         }
@@ -82,5 +91,10 @@ public class UpdateRequest implements IUpdateRequest {
 
     private long getUpdateStartTime(IDataResource resource) {
         return 0;
+    }
+
+    @Override
+    public Bundle getInfo() {
+        return mInfoBundle;
     }
 }

@@ -12,101 +12,121 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.TextSwitcher;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
 public class PopupService extends Service {
-	public final static String EXTRA_VIDEO_TITLE = "com.orgazmpionerki.braintracker.service.extra_video_title";
-	public final static String EXTRA_BRAIN_POINTS = "com.orgazmpionerki.braintracker.service.brain_points";
+    private static final String DEBUG_TAG = "popup_service_debug";
 
-	private WindowManager mWindowManager;
-	private ImageView mImageView;
-	private TextView mTextView;
-	private int mPoints;
-	private LinearLayout mLayout;
+    public final static String EXTRA_VIDEO_TITLE = "com.orgazmpionerki.braintracker.service.extra_video_title";
+    public final static String EXTRA_BRAIN_POINTS_BEFORE = "com.orgazmpionerki.braintracker.service.brain_points_before";
+    public final static String EXTRA_BRAIN_POINTS_AFTER = "com.orgazmpionerki.braintracker.service.brain_points_after";
 
-	private OnTouchListener mTouchListener = new OnTouchListener() {
+    private final long SHOW_BEFORE_POINTS_TIME = 2000;
+    private final long SHOW_AFTER_POINTS_TIME = 5000;
 
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				stopSelf();
-				return true;
-			case MotionEvent.ACTION_UP:
-				return true;
-			case MotionEvent.ACTION_MOVE:
+    private WindowManager mWindowManager;
+    private ImageView mImageView;
+    private TextSwitcher mPopupTextSwitcher;
+    private LinearLayout mLayout;
 
-				return true;
-			}
-			return false;
-		}
-	};
+    private int mBeforePoint = 0;
+    private int mAfterPoints = 0;
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		// Not used
-		return null;
-	}
+    private Handler mBeforeHandler;
+    private Handler mAfterHandler;
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		Tracer.debug("ON START COMMAND POPUP");
+    private OnTouchListener mTouchListener = new OnTouchListener() {
 
-		if (intent.hasExtra(EXTRA_BRAIN_POINTS) && mTextView != null) {
-			mPoints = intent.getIntExtra(EXTRA_BRAIN_POINTS, 0);
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    stopSelf();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    return true;
+                case MotionEvent.ACTION_MOVE:
 
-			if (mPoints < 0) {
-				mTextView.setText("" + mPoints);
-				mTextView.setTextColor(getResources().getColor(R.color.red));
-			} else if (mPoints > 0) {
-				mTextView.setText("+" + mPoints);
-				mTextView.setTextColor(getResources().getColor(R.color.green));
-			} else {
-				stopSelf();
-			}
-		}
+                    return true;
+            }
+            return false;
+        }
+    };
 
-		return super.onStartCommand(intent, flags, startId);
-	}
+    @Override
+    public IBinder onBind(Intent intent) {
+        // Not used
+        return null;
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		Tracer.debug("CREATE POPUP");
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Tracer.methodEnter(DEBUG_TAG);
 
-		mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        mBeforePoint = intent.getIntExtra(EXTRA_BRAIN_POINTS_BEFORE, 0);
+        mAfterPoints = intent.getIntExtra(EXTRA_BRAIN_POINTS_AFTER, 0);
 
-		mLayout = (LinearLayout) LinearLayout.inflate(this, R.layout.popup, null);
-		mImageView = (ImageView) mLayout.findViewById(R.id.image);
-		mTextView = (TextView) mLayout.findViewById(R.id.title);
+        if (mPopupTextSwitcher != null) {
+            // show previous points
+            mPopupTextSwitcher.setText(Integer.toString(mBeforePoint));
+        }
 
-		mImageView.setOnTouchListener(mTouchListener);
+        // switch text points after delay time
+        mBeforeHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // show new points
+                mPopupTextSwitcher.setText(Integer.toString(mAfterPoints));
 
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(200, 250, WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
+                // finish service after showing new points
+                mAfterHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // stop service
+                        stopSelf();
+                    }
+                }, SHOW_AFTER_POINTS_TIME);
+            }
+        }, SHOW_BEFORE_POINTS_TIME);
 
-		params.gravity = Gravity.TOP | Gravity.LEFT;
-		params.x = 0;
-		params.y = 100;
+        return super.onStartCommand(intent, flags, startId);
+    }
 
-		mWindowManager.addView(mLayout, params);
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Tracer.methodEnter(DEBUG_TAG);
 
-		// set timer for popup notification
-		Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			public void run() {
-				Tracer.debug("STOP POPUP");
-				stopSelf();
-			}
-		}, 5000);
-	}
+        mBeforeHandler = new Handler();
+        mAfterHandler = new Handler();
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (mLayout != null)
-			mWindowManager.removeView(mLayout);
-	}
+        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        mLayout = (LinearLayout) LinearLayout.inflate(this, R.layout.popup, null);
+        mImageView = (ImageView) mLayout.findViewById(R.id.image);
+        mPopupTextSwitcher = (TextSwitcher) mLayout.findViewById(R.id.title);
+        mPopupTextSwitcher.setInAnimation(this, R.anim.text_slide_in_top);
+        mPopupTextSwitcher.setOutAnimation(this, R.anim.text_slide_out_bot);
+
+        mImageView.setOnTouchListener(mTouchListener);
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(200, 250, WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 0;
+        params.y = 100;
+
+        mWindowManager.addView(mLayout, params);
+    }
+
+    @Override
+    public void onDestroy() {
+        Tracer.methodEnter(DEBUG_TAG);
+        super.onDestroy();
+        if (mLayout != null)
+            mWindowManager.removeView(mLayout);
+    }
 }
