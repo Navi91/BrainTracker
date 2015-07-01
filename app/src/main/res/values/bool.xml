@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="android_settings_default">true</bool>
+    <bool name="samsung_settings_default">true</bool>
+    <bool name="youtube_settings_default">true</bool>
+    <bool name="facebook_settings_default">false</bool>
+    <bool name="twitter_settings_default">false</bool>
+
+</resources>
