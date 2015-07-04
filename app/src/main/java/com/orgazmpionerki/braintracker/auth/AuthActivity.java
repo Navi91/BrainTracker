@@ -1,77 +1,83 @@
 package com.orgazmpionerki.braintracker.auth;
 
-import com.braintracker.R;
-import com.orgazmpionerki.braintracker.auth.tokens.TokensTask;
-import com.orgazmpionerki.braintracker.auth.tokens.TokenRetrievedListener;
-import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
-import com.orgazmpionerki.braintracker.util.Constants;
-import com.orgazmpionerki.braintracker.util.Preferences;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-/** Activity incorporates signing into YouTube and Retrieving the access_token for YouTube API access in the future */
-public class AuthActivity extends FragmentActivity implements OnAuthListener, TokenRetrievedListener {
+import com.braintracker.R;
+import com.orgazmpionerki.braintracker.auth.tokens.TokenRetrievedListener;
+import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
+import com.orgazmpionerki.braintracker.auth.tokens.TokensTask;
+import com.orgazmpionerki.braintracker.util.Constants;
+import com.orgazmpionerki.braintracker.util.Preferences;
 
-	public static final String EXTRA_TOKENS = "com.braintracker.AuthActivity.EXTRA_TOKENS";
+/**
+ * Activity incorporates signing into YouTube and Retrieving the access_token for YouTube API access in the future
+ */
+public class AuthActivity extends AppCompatActivity implements OnAuthListener, TokenRetrievedListener {
 
-	@SuppressLint("SetJavaScriptEnabled")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    public static final String EXTRA_TOKENS = "com.braintracker.AuthActivity.EXTRA_TOKENS";
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_oauth);
-		setResult(RESULT_CANCELED);
+        setContentView(R.layout.activity_oauth);
 
-		WebView webview = (WebView) findViewById(R.id.webview);
-		webview.setWebViewClient(new AuthWebViewClient(new ParamChecker(this)));
-		webview.getSettings().setJavaScriptEnabled(true);
-		webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-		webview.loadUrl(Constants.OAUTH_URL);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		Toast.makeText(this, "Loading .. just wait", Toast.LENGTH_SHORT).show();
-	}
+        setResult(RESULT_CANCELED);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			onRefused();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+        WebView webview = (WebView) findViewById(R.id.webview);
+        webview.setWebViewClient(new AuthWebViewClient(new ParamChecker(this)));
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webview.loadUrl(Constants.OAUTH_URL);
 
-	}
+        Toast.makeText(this, "Loading .. just wait", Toast.LENGTH_SHORT).show();
+    }
 
-	@Override
-	public void onAuthorized(String authCode) {
-		Preferences.putAuthCode(this, authCode);
-		new Thread(new TokensTask(this, authCode, this)).start();
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onRefused();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
 
-	@Override
-	public void onRefused() {
-		setResult(RESULT_CANCELED);
-		finish();
-	}
+    }
 
-	@Override
-	public void onTokensRetrieved(Tokens tokens) {
-		Intent intent = createSendableBundle(tokens);
-		setResult(RESULT_OK, intent);
-		finish();
-	}
+    @Override
+    public void onAuthorized(String authCode) {
+        Preferences.putAuthCode(this, authCode);
+        new Thread(new TokensTask(this, authCode, this)).start();
+    }
 
-	private Intent createSendableBundle(Tokens tokens) {
-		Intent intent = new Intent();
-		intent.putExtra(EXTRA_TOKENS, tokens);
-		return intent;
-	}
+    @Override
+    public void onRefused() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
+    public void onTokensRetrieved(Tokens tokens) {
+        Intent intent = createSendableBundle(tokens);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private Intent createSendableBundle(Tokens tokens) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_TOKENS, tokens);
+        return intent;
+    }
 }

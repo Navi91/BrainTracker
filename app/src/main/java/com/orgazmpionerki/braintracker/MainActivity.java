@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +37,7 @@ import com.orgazmpionerki.braintracker.util.Tracer;
 
 import java.util.Calendar;
 
-public class MainActivity extends ActionBarActivity implements WiFiStateChangeListener, OnChangePointsListener {
+public class MainActivity extends AppCompatActivity implements WiFiStateChangeListener, OnChangePointsListener {
 
     public static final int AUTH_REQUEST = 123;
 
