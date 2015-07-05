@@ -48,7 +48,7 @@ public class BrainProgressView extends View implements IValueView {
     protected void onDraw(Canvas canvas) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.brain, options);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.brain_progress, options);
 
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
