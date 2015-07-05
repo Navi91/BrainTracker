@@ -1,5 +1,6 @@
 <resources>
     
-    <integer name="target_default_value">40</integer>
-    
+    <integer name="target_default_value">100</integer>
+    <integer name="popup_notification_animation_time">2000</integer>
+
 </resources>

@@ -48,7 +48,7 @@ public class TestFragment extends BaseFragment {
         textSwitcher.setText(mFlag ? start : stop);
 
         final BrainProgressView progressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
-        final BrainProgressAnimator brainProgressAnimator = new BrainProgressAnimator(progressView, 80, 30, 100);
+        final BrainProgressAnimator brainProgressAnimator = new BrainProgressAnimator(progressView, 80, -20, 100);
 
         Button testButton = (Button) layout.findViewById(R.id.test_button);
 

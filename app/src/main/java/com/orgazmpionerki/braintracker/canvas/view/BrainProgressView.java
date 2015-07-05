@@ -18,49 +18,83 @@ import com.braintracker.R;
  */
 public class BrainProgressView extends View implements IValueView {
     private final Paint mPaint = new Paint();
+    private Bitmap mBitmap;
     private float mValue = 0f;
+    private final float mGreenBoundValue = 0.4f;
+    private final float mRedBoundValue = 0f;
+    private int mProgressColor = Color.RED;
 
     public BrainProgressView(Context context) {
         super(context);
+        init();
     }
 
     public BrainProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public BrainProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BrainProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    private void init() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.brain_progress, options);
     }
 
     @Override
     public void setValue(float value) {
         mValue = value;
+        updateProgressState(value);
 
         invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inMutable = true;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.brain_progress, options);
-
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
+        int width = mBitmap.getWidth();
+        int height = mBitmap.getHeight();
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (bitmap.getPixel(x, y) == Color.WHITE && y >= height * (1 - mValue)) {
-                    bitmap.setPixel(x, y, Color.GREEN);
+                if (isMaskPixelColor(mBitmap.getPixel(x, y))) {
+                    if (mProgressColor == Color.RED) {
+                        mBitmap.setPixel(x, y, mProgressColor);
+                        continue;
+                    }
+
+                    if (y < height * (1 - mValue)) {
+                        mBitmap.setPixel(x, y, Color.WHITE);
+                    } else {
+                        mBitmap.setPixel(x, y, mProgressColor);
+                    }
                 }
             }
         }
 
-        canvas.drawBitmap(bitmap, 0f, 0f, mPaint);
+        canvas.drawBitmap(mBitmap, 0f, 0f, mPaint);
+    }
+
+    private boolean isMaskPixelColor(int color) {
+        return color == Color.WHITE || color == Color.GREEN || color == Color.YELLOW || color == Color.RED;
+    }
+
+    private void updateProgressState(float value) {
+        if (value > mGreenBoundValue) {
+            mProgressColor = Color.GREEN;
+        } else if (value <= mGreenBoundValue && value >= mRedBoundValue) {
+            mProgressColor = Color.YELLOW;
+        } else {
+            mProgressColor = Color.RED;
+        }
     }
 }
