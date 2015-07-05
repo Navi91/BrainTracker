@@ -1,4 +1,4 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -8,11 +8,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
+import com.orgazmpionerki.braintracker.canvas.animation.ITextViewAnimation;
+
 /**
  * Created by Dmitriy on 21.06.2015.
  */
 public class AnimationTextView extends TextView {
-    private ITextViewAnimator mAnimator;
+    private ITextViewAnimation mAnimator;
 
     public AnimationTextView(Context context) {
         super(context);
@@ -38,11 +40,11 @@ public class AnimationTextView extends TextView {
     protected void initAnimation() {
     }
 
-    public void setAnimator(ITextViewAnimator animator) {
+    public void setAnimator(ITextViewAnimation animator) {
         mAnimator = animator;
     }
 
-    public ITextViewAnimator getAnimator() {
+    public ITextViewAnimation getAnimator() {
         return mAnimator;
     }
 

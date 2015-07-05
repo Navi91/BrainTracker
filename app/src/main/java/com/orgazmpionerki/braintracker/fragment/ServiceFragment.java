@@ -11,9 +11,9 @@ import android.widget.RelativeLayout;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.MainActivity;
-import com.orgazmpionerki.braintracker.canvas.AnimationTextView;
-import com.orgazmpionerki.braintracker.canvas.PowerButtonAnimator;
-import com.orgazmpionerki.braintracker.canvas.ServiceStatusAnimator;
+import com.orgazmpionerki.braintracker.canvas.view.AnimationTextView;
+import com.orgazmpionerki.braintracker.canvas.animator.PowerButtonAnimator;
+import com.orgazmpionerki.braintracker.canvas.animator.ServiceStatusAnimator;
 import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
 import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceController;
 

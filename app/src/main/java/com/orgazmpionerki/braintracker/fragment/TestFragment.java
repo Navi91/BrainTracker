@@ -8,15 +8,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
-import android.widget.TextView;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.MainActivity;
-import com.orgazmpionerki.braintracker.canvas.AnimationTextView;
-import com.orgazmpionerki.braintracker.canvas.PowerButtonAnimator;
-import com.orgazmpionerki.braintracker.canvas.ServiceStatusAnimator;
-import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
-import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceController;
+import com.orgazmpionerki.braintracker.canvas.animator.BrainProgressAnimator;
+import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
 
 /**
  * Created by Dmitriy on 29.06.2015.
@@ -52,12 +47,16 @@ public class TestFragment extends BaseFragment {
         final String stop = getResources().getString(R.string.stop_service_button);
         textSwitcher.setText(mFlag ? start : stop);
 
+        final BrainProgressView progressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
+        final BrainProgressAnimator brainProgressAnimator = new BrainProgressAnimator(progressView, 80, 30, 100);
+
         Button testButton = (Button) layout.findViewById(R.id.test_button);
 
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textSwitcher.setText(mFlag ? start : stop);
+                brainProgressAnimator.start();
                 mFlag = !mFlag;
             }
         });

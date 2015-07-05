@@ -1,19 +1,17 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.animation;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 /**
  * Created by Dmitriy on 25.06.2015.
  */
-public class PowerButtonAnimation implements ITextViewAnimator {
+public class PowerButtonAnimation implements ITextViewAnimation {
 
     // animation params
     private long mDuration = 350;

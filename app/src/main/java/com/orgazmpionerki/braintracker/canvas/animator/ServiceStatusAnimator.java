@@ -1,6 +1,10 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.animator;
 
 import android.animation.ValueAnimator;
+
+import com.orgazmpionerki.braintracker.canvas.animation.ProgressArcServiceOff;
+import com.orgazmpionerki.braintracker.canvas.animation.ProgressArcServiceOn;
+import com.orgazmpionerki.braintracker.canvas.view.AnimationTextView;
 
 /**
  * Created by Dmitriy on 25.06.2015.

@@ -1,9 +1,12 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.animator;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.orgazmpionerki.braintracker.canvas.animation.PowerButtonAnimation;
+import com.orgazmpionerki.braintracker.canvas.view.AnimationTextView;
 
 /**
  * Created by Dmitriy on 25.06.2015.

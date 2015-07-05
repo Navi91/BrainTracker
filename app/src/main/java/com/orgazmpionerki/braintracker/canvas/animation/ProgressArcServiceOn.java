@@ -1,4 +1,4 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.animation;
 
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
@@ -7,34 +7,33 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 /**
- * Created by Dmitriy on 24.06.2015.
+ * Created by Dmitriy on 19.06.2015.
  */
-public class ProgressArcServiceOff implements ITextViewAnimator {
+public class ProgressArcServiceOn implements ITextViewAnimation {
     private Path mPath;
     private float mRectHeight = 400f;
     private float mRectWidth = 400f;
+    private float mProgressMaxAngle = 70f; // must be >0 and < 360
     private float mValue = 0f;
+    private float mLengthCoeff = 0f; // its 1f when value is 0.5f
     private RectF mRect;
     private Paint mPaint;
-
-    // animation params
-    private float mProgressAngle = 50f; // must be >0 and < 360
     private float mStrokeWidth = 10f;
     private float mPadding = 20f;
-    private long mDuration = 5000L;
-    private TimeInterpolator mInterpolator = new LinearInterpolator();
+    private long mDuration = 2000L;
+    private TimeInterpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
-    public ProgressArcServiceOff() {
+    public ProgressArcServiceOn() {
         mPath = new Path();
         mRect = new RectF(0f, 0f, mRectWidth, mRectHeight);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(Color.GREEN);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeWidth(mStrokeWidth);
@@ -47,8 +46,12 @@ public class ProgressArcServiceOff implements ITextViewAnimator {
     private void invalidate(TextView textView) {
         mPath.reset();
 
+        setLength(mValue);
+
+        float angle = mProgressMaxAngle * mLengthCoeff;
         float currentProgress = 360 * mValue;
-        float startAngle = currentProgress - mProgressAngle / 2;
+        float startAngle = currentProgress - angle / 2;
+        float sweepAngle = angle;
 
         Rect bounds = new Rect();
         Paint textPaint = textView.getPaint();
@@ -62,7 +65,7 @@ public class ProgressArcServiceOff implements ITextViewAnimator {
 
         setRect(new RectF(mStrokeWidth, mStrokeWidth, max + (int) mStrokeWidth + mPadding, max + (int) mStrokeWidth + mPadding));
 
-        mPath.addArc(mRect, startAngle - 90, mProgressAngle);
+        mPath.addArc(mRect, startAngle - 90, sweepAngle);
     }
 
     @Override
@@ -76,6 +79,14 @@ public class ProgressArcServiceOff implements ITextViewAnimator {
         invalidate(textView);
     }
 
+    private void setLength(float value) {
+        if (value < 0.5f) {
+            mLengthCoeff = value;
+        } else {
+            mLengthCoeff = 1f - value;
+        }
+    }
+
     @Override
     public long getDuration() {
         return mDuration;
@@ -86,10 +97,8 @@ public class ProgressArcServiceOff implements ITextViewAnimator {
         return mInterpolator;
     }
 
-
     @Override
     public boolean havePriorityDraw() {
         return false;
     }
 }
-

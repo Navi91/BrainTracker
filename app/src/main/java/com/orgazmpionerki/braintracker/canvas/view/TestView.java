@@ -1,4 +1,4 @@
-package com.orgazmpionerki.braintracker.canvas;
+package com.orgazmpionerki.braintracker.canvas.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
