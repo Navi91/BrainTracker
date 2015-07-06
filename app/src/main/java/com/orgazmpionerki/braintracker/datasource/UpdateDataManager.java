@@ -80,7 +80,7 @@ public class UpdateDataManager implements IUpdateRequestListener {
 
     private void updateResource(IDataResource resource) {
         // check, that db not closing from another thread (method onDestroy in BrainTrackerService example)
-        if (mDatabase == null || mDatabase.isClose()) {
+        if (mDatabase == null || !mDatabase.isOpen()) {
             return;
         }
 

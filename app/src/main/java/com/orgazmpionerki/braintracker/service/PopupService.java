@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 
 import com.braintracker.R;
+import com.orgazmpionerki.braintracker.canvas.animator.BrainProgressAnimator;
+import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
+import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
 public class PopupService extends Service {
@@ -28,7 +31,8 @@ public class PopupService extends Service {
     private final long SHOW_AFTER_POINTS_TIME = 5000;
 
     private WindowManager mWindowManager;
-    private ImageView mImageView;
+    private BrainProgressView mBrainProgressView;
+    private BrainProgressAnimator mProgressAnimator;
     private TextSwitcher mPopupTextSwitcher;
     private LinearLayout mLayout;
 
@@ -74,12 +78,17 @@ public class PopupService extends Service {
             mPopupTextSwitcher.setText(Integer.toString(mBeforePoint));
         }
 
+        mBrainProgressView.setValue(mBeforePoint - Preferences.getTargetValue(this));
+
+        mProgressAnimator = new BrainProgressAnimator(mBrainProgressView, mBeforePoint, mAfterPoints, Preferences.getTargetValue(this));
+
         // switch text points after delay time
         mBeforeHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // show new points
                 mPopupTextSwitcher.setText(Integer.toString(mAfterPoints));
+                mProgressAnimator.start();
 
                 // finish service after showing new points
                 mAfterHandler.postDelayed(new Runnable() {
@@ -106,12 +115,12 @@ public class PopupService extends Service {
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         mLayout = (LinearLayout) LinearLayout.inflate(this, R.layout.popup, null);
-        mImageView = (ImageView) mLayout.findViewById(R.id.image);
+        mBrainProgressView = (BrainProgressView) mLayout.findViewById(R.id.image);
         mPopupTextSwitcher = (TextSwitcher) mLayout.findViewById(R.id.title);
         mPopupTextSwitcher.setInAnimation(this, R.anim.text_slide_in_top);
         mPopupTextSwitcher.setOutAnimation(this, R.anim.text_slide_out_bot);
 
-        mImageView.setOnTouchListener(mTouchListener);
+        mBrainProgressView.setOnTouchListener(mTouchListener);
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(200, 250, WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
 

@@ -57,7 +57,7 @@ public class NotificationController implements IUpdateRequestListener {
     }
 
     private Notification createAndroidNotification(int points) {
-        String today_points = "Today: ";
+        String today_points = "Brain points: ";
 
         if (points > 0) {
             today_points += "+" + points;

@@ -7,6 +7,7 @@ import com.orgazmpionerki.braintracker.database.tables.WatchHistoryTable;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
 import com.orgazmpionerki.braintracker.datasource.dataresource.DataResourceType;
 import com.orgazmpionerki.braintracker.util.Constants;
+import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.TimeManager;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
@@ -21,12 +22,13 @@ public class BrainTrackerDatabase {
 
     private SQLiteDatabase mDatabase;
     private BrainTrackerSQLiteHelper mDatabaseHelper;
-    private boolean mClose = false;
     private boolean mOpen = false;
+    private Context mContext;
 
     public BrainTrackerDatabase(Context context) {
         Tracer.methodEnter(DEBUG_TAG);
         mDatabaseHelper = new BrainTrackerSQLiteHelper(context);
+        mContext = context;
     }
 
     public void open() throws SQLException {
@@ -38,7 +40,7 @@ public class BrainTrackerDatabase {
     public void close() {
         Tracer.methodEnter(DEBUG_TAG);
         mDatabaseHelper.close();
-        mClose = true;
+        mOpen = false;
     }
 
 
@@ -147,6 +149,8 @@ public class BrainTrackerDatabase {
 
         while (!cursor.isAfterLast()) {
             result += cursor.getInt(points_index);
+            // add every day brain points
+            result += Preferences.getTargetValue(mContext);
             cursor.moveToNext();
         }
 
@@ -157,9 +161,5 @@ public class BrainTrackerDatabase {
 
     public boolean isOpen() {
         return mOpen;
-    }
-
-    public boolean isClose() {
-        return mClose;
     }
 }

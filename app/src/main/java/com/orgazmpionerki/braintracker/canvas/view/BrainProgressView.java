@@ -41,29 +41,35 @@ public class BrainProgressView extends View implements IValueView {
 
     public BrainProgressView(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public BrainProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public BrainProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BrainProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(attrs);
     }
 
-    private void init() {
+    private void init(AttributeSet attrs) {
+        int bitmapResource = R.drawable.brain_progress;
+
+        if (attrs != null) {
+            bitmapResource = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "drawable", R.drawable.brain_progress);
+        }
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test_brain, options);
+        mBitmap = BitmapFactory.decodeResource(getResources(), bitmapResource, options);
 
         mCurrentState = new BrainProgressState(0f, Color.WHITE);
         mPreviousState = new BrainProgressState(0f, Color.WHITE);
@@ -71,6 +77,10 @@ public class BrainProgressView extends View implements IValueView {
 
     @Override
     public void setValue(float value) {
+        if (mCurrentState.mValue == value) {
+            return;
+        }
+
         mPreviousState.copy(mCurrentState);
 
         updateProgressState(value);
