@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@android:color/transparent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_toLeftOf="@+id/border"
+        android:minHeight="50dp"
+        android:minWidth="250dp" />
+
+    <TextView
+        android:id="@+id/target"
+        style="@style/BrainTrackeValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_toLeftOf="@+id/border" />
+
+    <TextView
+        android:id="@+id/points"
+        style="@style/BrainTrackeValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/target"
+        android:layout_toLeftOf="@+id/border" />
+
+    <TextView
+        android:id="@+id/percents"
+        style="@style/BrainTrackeValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/points"
+        android:layout_toLeftOf="@+id/border" />
+
+    <View
+        android:id="@+id/border"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <com.orgazmpionerki.braintracker.canvas.view.BrainProgressView
+        android:id="@+id/brain_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_toRightOf="@+id/border"
+        android:drawable="@drawable/test_brain" />
+
+</RelativeLayout>
