@@ -17,7 +17,7 @@ public class ProgressArcServiceOn implements ITextViewAnimation {
     private Path mPath;
     private float mRectHeight = 400f;
     private float mRectWidth = 400f;
-    private float mProgressMaxAngle = 70f; // must be >0 and < 360
+    private float mProgressMaxAngle = 70f; // must be > 0 and < 360
     private float mValue = 0f;
     private float mLengthCoeff = 0f; // its 1f when value is 0.5f
     private RectF mRect;
