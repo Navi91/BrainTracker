@@ -27,8 +27,6 @@ public class UpdateDataRequestExecutor {
             IUpdateRequest request = (IUpdateRequest) msg.obj;
             request.onUpdatingDone();
         }
-
-        ;
     };
 
     public UpdateDataRequestExecutor() {

@@ -20,6 +20,7 @@
         <item name="android:minWidth">250dp</item>
         <item name="android:minHeight">50dp</item>
         <item name="android:layout_marginLeft">48dp</item>
+        <item name="android:layout_marginRight">48dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:gravity">center_vertical|left</item>
     </style>

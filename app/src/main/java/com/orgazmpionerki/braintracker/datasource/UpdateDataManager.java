@@ -104,7 +104,7 @@ public class UpdateDataManager implements IUpdateRequestListener {
     @Override
     public void onUpdateDone(IUpdateRequest request) {
         // if request have new data from resource
-        if (request.isSuccess()) {
+        if (request.isSuccess() && mDatabase != null && mDatabase.isOpen()) {
             // change of last success update
             mDatabase.updateResourceLastUpdateTime(request.getResource().getType());
             // notify listeners about new data

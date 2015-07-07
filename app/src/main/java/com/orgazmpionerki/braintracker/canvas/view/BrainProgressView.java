@@ -72,7 +72,7 @@ public class BrainProgressView extends View implements IValueView {
         mBitmap = BitmapFactory.decodeResource(getResources(), bitmapResource, options);
 
         mCurrentState = new BrainProgressState(0f, Color.WHITE);
-        mPreviousState = new BrainProgressState(0f, Color.WHITE);
+        mPreviousState = new BrainProgressState(0f, 0);
     }
 
     @Override
@@ -95,6 +95,11 @@ public class BrainProgressView extends View implements IValueView {
         } else {
             onDrawNewColor(canvas);
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        this.setMeasuredDimension(mBitmap.getWidth(), mBitmap.getHeight());
     }
 
     private void drawBitmapPixel(Bitmap bitmap, int x, int y, float progress) {

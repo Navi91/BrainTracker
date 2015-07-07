@@ -126,11 +126,19 @@ public class BrainTrackerDatabase {
 
     public int getBrainPoints(int days) {
         Tracer.methodEnter(DEBUG_TAG);
+
+        if (days < 1) {
+            throw  new UnsupportedOperationException("The days count must be > 0!!!");
+        }
+
         String table = WatchHistoryTable.TABLE_HISTORY;
         String columnPoints = WatchHistoryTable.COLUMN_POINTS;
         String columnTime = WatchHistoryTable.COLUMN_TIME;
 
         int result = 0;
+        // add every day brain points
+        result += days * Preferences.getTargetValue(mContext);
+
         long today = Calendar.getInstance().getTimeInMillis();
         long startDate = today - (days - 1) * Constants.DAY_IN_MILLIS;
 
@@ -149,8 +157,6 @@ public class BrainTrackerDatabase {
 
         while (!cursor.isAfterLast()) {
             result += cursor.getInt(points_index);
-            // add every day brain points
-            result += Preferences.getTargetValue(mContext);
             cursor.moveToNext();
         }
 

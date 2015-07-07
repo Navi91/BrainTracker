@@ -74,11 +74,12 @@ public class PopupService extends Service {
         mAfterPoints = intent.getIntExtra(EXTRA_BRAIN_POINTS_AFTER, 0);
 
         if (mPopupTextSwitcher != null) {
-            // show previous points
-            mPopupTextSwitcher.setText(Integer.toString(mBeforePoint));
+            // show points before
+            mPopupTextSwitcher.setCurrentText(Integer.toString(mBeforePoint));
         }
 
-        mBrainProgressView.setValue(mBeforePoint - Preferences.getTargetValue(this));
+        // show progress before
+        mBrainProgressView.setValue((float) mBeforePoint / (float) Preferences.getTargetValue(PopupService.this));
 
         mProgressAnimator = new BrainProgressAnimator(mBrainProgressView, mBeforePoint, mAfterPoints, Preferences.getTargetValue(this));
 

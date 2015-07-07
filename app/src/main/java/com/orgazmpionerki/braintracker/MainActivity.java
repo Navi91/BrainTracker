@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     private static final int DRAWER_IDENTIFIER_ABOUT = 3;
 
     private Drawer.Result mDrawerResult = null;
+    private int mCurrentDrawerItem = 0;
     private IBrainServiceController mBrainServiceController;
     private Toolbar mToolbar;
 
@@ -75,7 +76,11 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        onDrawerItemClicked(iDrawerItem.getIdentifier());
+                        if (iDrawerItem != null) {
+                            onDrawerItemClicked(iDrawerItem.getIdentifier());
+                        } else {
+                            mDrawerResult.setSelection(mCurrentDrawerItem);
+                        }
                     }
                 })
                 .build();
@@ -185,24 +190,29 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     }
 
     private void onDrawerItemClicked(int identifier) {
+
         switch (identifier) {
             case DRAWER_IDENTIFIER_TRACKER:
                 mToolbar.setTitle(R.string.app_name);
                 BaseFragment serviceFragment = ServiceFragment.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, serviceFragment).commit();
+                mCurrentDrawerItem = identifier;
                 break;
             case DRAWER_IDENTIFIER_STATISTICS:
                 mToolbar.setTitle(R.string.statistics_fragment_title);
                 BaseFragment statisticsFragment = StatisticsFrament.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, statisticsFragment).commit();
+                mCurrentDrawerItem = identifier;
                 break;
             case DRAWER_IDENTIFIER_SETTINGS:
                 mToolbar.setTitle(R.string.setting_fragment_title);
                 BaseFragment settingsFragment = SettingsFragment.newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
+                mCurrentDrawerItem = identifier;
                 break;
             case DRAWER_IDENTIFIER_ABOUT:
                 showAboutDialog();
+                mDrawerResult.setSelection(mCurrentDrawerItem);
                 break;
         }
     }

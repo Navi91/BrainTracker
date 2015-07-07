@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.braintracker.R;
+import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
@@ -34,6 +35,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     private ValueTextView mPoints;
     private ValueTextView mTarget;
     private ValueTextView mPercents;
+    private BrainProgressView mBrainProgressView;
     private StatisticsPeriod mPeriod;
     private int mTargetValue;
     private int mPointsValue;
@@ -67,6 +69,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
         mTarget = new ValueTextView(getResources().getString(R.string.statistics_target_caption), (TextView) layout.findViewById(R.id.target));
         mPoints = new ValueTextView(getResources().getString(R.string.statistics_points_caption), (TextView) layout.findViewById(R.id.points));
         mPercents = new ValueTextView(getResources().getString(R.string.statistics_percents_caption), (TextView) layout.findViewById(R.id.percents));
+        mBrainProgressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
 
         mAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, mPeriods);
 
@@ -125,6 +128,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
         updateTarget();
         updatePoints();
         updatePercents();
+        updateBrainProgress();
     }
 
     private void updateTarget() {
@@ -207,6 +211,14 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
         } else {
             mPercents.setValue("" + percents + " %");
         }
+    }
+
+    private void updateBrainProgress() {
+        float value = 0f;
+
+        value = (float) mPointsValue / (float) mTargetValue;
+
+        mBrainProgressView.setValue(value);
     }
 
     private void updateStatisticsPeriod(int period) {
