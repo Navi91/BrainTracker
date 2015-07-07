@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +39,7 @@ import com.orgazmpionerki.braintracker.util.Tracer;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements WiFiStateChangeListener, OnChangePointsListener {
+    private static final String BUNDLE_CURRENT_DRAWER_ITEM = "com.orgazmpionerki.braintracker.bundle_current_drawer_item";
 
     public static final int AUTH_REQUEST = 123;
 
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
                         if (iDrawerItem != null) {
                             onDrawerItemClicked(iDrawerItem.getIdentifier());
                         } else {
-                            mDrawerResult.setSelection(mCurrentDrawerItem);
+                            onDrawerItemClicked(DRAWER_IDENTIFIER_TRACKER);
+                            mDrawerResult.setSelection(DRAWER_IDENTIFIER_TRACKER);
                         }
                     }
                 })
@@ -89,13 +92,19 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
             Preferences.putBeginDate(this, Calendar.getInstance().getTimeInMillis());
         }
 
+        if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_CURRENT_DRAWER_ITEM)) {
+            onDrawerItemClicked(savedInstanceState.getInt(BUNDLE_CURRENT_DRAWER_ITEM, 0));
+        } else {
 //        BaseFragment fragment = ServiceFragment.newInstance();
 //        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
-        BaseFragment testFragment = TestFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
+            BaseFragment testFragment = TestFragment.newInstance();
+            getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
+        }
 
         mBrainServiceController = new BrainTrackerServiceController();
+
+
     }
 
     @Override
@@ -108,6 +117,16 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     protected void onPause() {
         super.onPause();
         WiFiReceiver.removeListener(this, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState == null) {
+            outState = new Bundle();
+        }
+
+        outState.putInt(BUNDLE_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
     }
 
     public void startAuthorisationForYouTube() {
@@ -190,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     }
 
     private void onDrawerItemClicked(int identifier) {
-
         switch (identifier) {
             case DRAWER_IDENTIFIER_TRACKER:
                 mToolbar.setTitle(R.string.app_name);

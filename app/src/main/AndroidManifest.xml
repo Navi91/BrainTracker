@@ -39,8 +39,7 @@
         </receiver>
 
         <activity
-            android:name="com.orgazmpionerki.braintracker.MainActivity"
-            android:configChanges="orientation|screenSize" >
+            android:name="com.orgazmpionerki.braintracker.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
