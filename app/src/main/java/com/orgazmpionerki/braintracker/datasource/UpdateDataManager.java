@@ -26,8 +26,8 @@ public class UpdateDataManager implements IUpdateRequestListener {
     private Context mContext;
     private BrainTrackerDatabase mDatabase;
     private Handler mHandler;
-    private int mMinUpdateDelay = 20; // in seconds
-    private long mUpdatePeriod = 21 * 1000; // in milliseconds
+    private int mMinUpdateDelay = 10; // in seconds
+    private long mUpdatePeriod = 11 * 1000; // in milliseconds
     private boolean mIsRunning = false;
     private List<IUpdateRequestListener> mListeners;
     private UpdateTask mCurrentUpdateTask;
