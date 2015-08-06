@@ -36,6 +36,11 @@ public class TestView extends ImageView {
     }
 
     @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
 

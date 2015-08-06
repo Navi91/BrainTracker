@@ -37,6 +37,11 @@ public class AnimationTextView extends TextView {
         initAnimation();
     }
 
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
+
     protected void initAnimation() {
     }
 

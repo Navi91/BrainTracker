@@ -60,6 +60,11 @@ public class BrainProgressView extends View implements IValueView {
         init(attrs);
     }
 
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
+
     private void init(AttributeSet attrs) {
         int bitmapResource = R.drawable.brain_progress;
 
