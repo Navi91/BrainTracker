@@ -2,6 +2,8 @@
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+        <item name="colorPrimary">@color/primary_main</item>
+        <item name="colorPrimaryDark">@color/primary_secondary</item>
     </style>
 
     <style name="BrainTrackePagerButton" parent="@style/Theme.AppCompat.NoActionBar">

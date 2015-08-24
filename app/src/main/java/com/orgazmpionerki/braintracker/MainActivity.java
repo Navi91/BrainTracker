@@ -1,8 +1,10 @@
 package com.orgazmpionerki.braintracker;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
 
         mBrainServiceController = new BrainTrackerServiceController();
 
-
+//        setStatusBarColor(R.color.primary_secondary);
     }
 
     @Override
@@ -253,6 +257,15 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         builder.setView(aboutView);
         builder.setPositiveButton(android.R.string.ok, null);
         builder.show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setStatusBarColor(int color) {
+        Window window = getWindow();
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(color));
     }
 
     private void traceResult(Tokens tokens) {

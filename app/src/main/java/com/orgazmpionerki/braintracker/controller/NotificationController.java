@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.MainActivity;
@@ -52,10 +53,6 @@ public class NotificationController implements IUpdateRequestListener {
         removeAndroidNotification();
     }
 
-    public Notification createAndroidNotification() {
-        return createAndroidNotification(getCurrentDayPoints());
-    }
-
     private Notification createAndroidNotification(int points) {
         String today_points = "Brain points: ";
 
@@ -69,7 +66,7 @@ public class NotificationController implements IUpdateRequestListener {
         builder.setSmallIcon(R.drawable.brain);
         builder.setContentTitle(getNotificationMessage());
         builder.setContentText(today_points);
-        builder.setOngoing(true);
+//        builder.setOngoing(true);
 
         Intent intent = new Intent(mContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -87,7 +84,8 @@ public class NotificationController implements IUpdateRequestListener {
 
     private void updateAndroidNotification() {
         Notification androidNotification = createAndroidNotification(getCurrentDayPoints());
-        NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+//        NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat manager = NotificationManagerCompat.from(mContext);
         manager.notify(Constants.NOTIFICATION_ID, androidNotification);
     }
 

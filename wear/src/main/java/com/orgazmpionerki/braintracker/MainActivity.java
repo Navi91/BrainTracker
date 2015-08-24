@@ -6,11 +6,14 @@ import android.support.wearable.view.BoxInsetLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import com.orgazmpionerki.braintracker.util.Tracer;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends WearableActivity {
+    private static final String DEBUG_TAG = "wear_debug";
 
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.US);
@@ -21,6 +24,7 @@ public class MainActivity extends WearableActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Tracer.methodEnter(DEBUG_TAG);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setAmbientEnabled();
@@ -32,18 +36,21 @@ public class MainActivity extends WearableActivity {
 
     @Override
     public void onEnterAmbient(Bundle ambientDetails) {
+        Tracer.methodEnter(DEBUG_TAG);
         super.onEnterAmbient(ambientDetails);
         updateDisplay();
     }
 
     @Override
     public void onUpdateAmbient() {
+        Tracer.methodEnter(DEBUG_TAG);
         super.onUpdateAmbient();
         updateDisplay();
     }
 
     @Override
     public void onExitAmbient() {
+        Tracer.methodEnter(DEBUG_TAG);
         updateDisplay();
         super.onExitAmbient();
     }

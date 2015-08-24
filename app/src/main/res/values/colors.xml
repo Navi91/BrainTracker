@@ -11,13 +11,17 @@
     <color name="divider">#1E000000</color>
 
     <!-- App Primary Colors -->
-    <color name="primary_main">#607d8b</color>
-    <color name="primary_secondary">#455a64</color>
+    <color name="primary_main">#00bcd4</color>
+    <color name="primary_secondary">#0097a7</color>
     <color name="primary_third_rate">#cfd8dc</color>
 
     <!-- App Accent Colors -->
     <color name="accent_main">#ffff00</color>
     <color name="accent_secondary">#ffd600</color>
     <color name="accent_third_rate">#ffff8d</color>
+
+    <!-- Material drawer color -->
+    <color name="material_drawer_primary">#00bcd4</color>
+    <color name="material_drawer_selected_text">#0097a7</color>
 
 </resources>
