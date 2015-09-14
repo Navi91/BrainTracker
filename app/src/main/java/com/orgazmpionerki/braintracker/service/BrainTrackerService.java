@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.orgazmpionerki.braintracker.controller.NotificationController;
+import com.orgazmpionerki.braintracker.notification.NotificationController;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 import com.orgazmpionerki.braintracker.util.Tracer;

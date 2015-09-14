@@ -35,7 +35,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     private ValueTextView mPoints;
     private ValueTextView mTarget;
     private ValueTextView mPercents;
-    private BrainProgressView mBrainProgressView;
+//    private BrainProgressView mBrainProgressView;
     private StatisticsPeriod mPeriod;
     private int mTargetValue;
     private int mPointsValue;
@@ -69,7 +69,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
         mTarget = new ValueTextView(getResources().getString(R.string.statistics_target_caption), (TextView) layout.findViewById(R.id.target));
         mPoints = new ValueTextView(getResources().getString(R.string.statistics_points_caption), (TextView) layout.findViewById(R.id.points));
         mPercents = new ValueTextView(getResources().getString(R.string.statistics_percents_caption), (TextView) layout.findViewById(R.id.percents));
-        mBrainProgressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
+//        mBrainProgressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
 
         mAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, mPeriods);
 
@@ -218,7 +218,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
 
         value = (float) mPointsValue / (float) mTargetValue;
 
-        mBrainProgressView.setValue(value);
+//        mBrainProgressView.setValue(value);
     }
 
     private void updateStatisticsPeriod(int period) {

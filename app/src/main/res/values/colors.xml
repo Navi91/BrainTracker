@@ -23,5 +23,6 @@
     <!-- Material drawer color -->
     <color name="material_drawer_primary">#00bcd4</color>
     <color name="material_drawer_selected_text">#0097a7</color>
+    <color name="material_drawer_primary_dark">#FF0000</color>
 
 </resources>

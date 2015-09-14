@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,12 +25,12 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.orgazmpionerki.braintracker.auth.AuthActivity;
 import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
-import com.orgazmpionerki.braintracker.controller.OnChangePointsListener;
 import com.orgazmpionerki.braintracker.fragment.BaseFragment;
 import com.orgazmpionerki.braintracker.fragment.ServiceFragment;
 import com.orgazmpionerki.braintracker.fragment.SettingsFragment;
 import com.orgazmpionerki.braintracker.fragment.StatisticsFrament;
 import com.orgazmpionerki.braintracker.fragment.TestFragment;
+import com.orgazmpionerki.braintracker.notification.OnChangePointsListener;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 import com.orgazmpionerki.braintracker.service.BrainTrackerService;
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDrawerResult = new Drawer()
                 .withActivity(this)
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
 
         mBrainServiceController = new BrainTrackerServiceController();
 
-//        setStatusBarColor(R.color.primary_secondary);
     }
 
     @Override
@@ -263,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     private void setStatusBarColor(int color) {
         Window window = getWindow();
 
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(color));
     }
 

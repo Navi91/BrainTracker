@@ -16,7 +16,10 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
 import com.orgazmpionerki.braintracker.canvas.animator.BrainProgressAnimator;
 import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
+import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
 import com.orgazmpionerki.braintracker.util.Tracer;
+import com.orgazmpionerki.braintracker.wear.WearController;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class TestFragment extends BaseFragment {
     public static final String TAG = "com.braintracker.fargment.test_fragment";
 
     private boolean mFlag = false;
+    private WearController mWearController;
 
     public static TestFragment newInstance() {
         return new TestFragment();
@@ -39,7 +43,8 @@ public class TestFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ;
+
+        mWearController = new WearController(getActivity());
     }
 
     @Override
@@ -64,8 +69,8 @@ public class TestFragment extends BaseFragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textSwitcher.setText(mFlag ? start : stop);
-                brainProgressAnimator.start();
+//                textSwitcher.setText(mFlag ? start : stop);
+//                brainProgressAnimator.start();
                 mFlag = !mFlag;
                 testWearConnection();
             }
@@ -79,6 +84,13 @@ public class TestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        mWearController.connect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWearController.disconnect();
     }
 
     @Override
@@ -86,29 +98,12 @@ public class TestFragment extends BaseFragment {
     }
 
     private void testWearConnection() {
-        final GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle connectionHint) {
-                        // Now you can use the Data Layer API
-                        Tracer.debug("wear_debug", "onConnected");
-                    }
+        BrainTrackerDatabase database = new BrainTrackerDatabase(getActivity());
+        database.open();
 
-                    @Override
-                    public void onConnectionSuspended(int cause) {
-                        Tracer.debug("wear_debug", "onConnectionSuspended " + cause);
-                    }
-                })
-                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult result) {
-                        Tracer.debug("wear_debug", "onConnectionFailed " + result.getErrorCode());
-                    }
-                })
-                .addApi(Wearable.API)
-                .build();
+        mWearController.notifyPointsChanged(database.getBrainPoints(1));
 
-        googleApiClient.connect();
+        database.close();
     }
 
     @Override
