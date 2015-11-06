@@ -6,6 +6,7 @@ import android.support.wearable.view.BoxInsetLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataApi;
@@ -18,11 +19,12 @@ import com.google.android.gms.wearable.Wearable;
 import com.orgazmpionerki.braintracker.handledwearcontract.WearContract;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
+import io.fabric.sdk.android.Fabric;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends WearableActivity implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class WearMainActivity extends WearableActivity implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String DEBUG_TAG = "wear_debug";
 
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
@@ -37,6 +39,7 @@ public class MainActivity extends WearableActivity implements DataApi.DataListen
     protected void onCreate(Bundle savedInstanceState) {
         Tracer.methodEnter(DEBUG_TAG);
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         setAmbientEnabled();
 

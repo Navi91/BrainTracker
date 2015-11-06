@@ -1,5 +1,7 @@
 package com.orgazmpionerki.braintracker.fragment;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 
 import com.braintracker.R;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Node;
@@ -52,7 +55,6 @@ public class TestFragment extends BaseFragment {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.test_fragment, null, true);
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-
         final TextSwitcher textSwitcher = (TextSwitcher) layout.findViewById(R.id.text_switcher);
         textSwitcher.setInAnimation(getActivity(), R.anim.text_slide_in_top);
         textSwitcher.setOutAnimation(getActivity(), R.anim.text_slide_out_bot);
@@ -60,20 +62,12 @@ public class TestFragment extends BaseFragment {
         final String stop = getResources().getString(R.string.stop_service_button);
         textSwitcher.setText(mFlag ? start : stop);
 
-        final BrainProgressView progressView = (BrainProgressView) layout.findViewById(R.id.brain_progress);
-        final BrainProgressAnimator brainProgressAnimator = new BrainProgressAnimator(progressView, 70, -10, 100);
-
         Button testButton = (Button) layout.findViewById(R.id.test_button);
 
-
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                textSwitcher.setText(mFlag ? start : stop);
-//                brainProgressAnimator.start();
-                mFlag = !mFlag;
-                testWearConnection();
-            }
+        testButton.setOnClickListener(view -> {
+            mFlag = !mFlag;
+//            testWearConnection();
+            getAccounts();
         });
 
 
@@ -104,6 +98,23 @@ public class TestFragment extends BaseFragment {
         mWearController.notifyPointsChanged(database.getBrainPoints(1));
 
         database.close();
+    }
+
+    private final String mGoogleAccountType = "com.google";
+
+    private void getAccounts() {
+        AccountManager accountManager = AccountManager.get(getActivity());
+        Account[] accounts = accountManager.getAccountsByType(mGoogleAccountType);
+
+        Account googleAccount = null;
+        for (Account account : accounts) {
+            Tracer.debug("account_debug", account.name);
+            googleAccount = account;
+        }
+
+        if (googleAccount != null) {
+
+        }
     }
 
     @Override

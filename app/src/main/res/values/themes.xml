@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BrainTrackerAppTheme" parent="BrainTrackerAppTheme.Base">
-    </style>
-
     <style name="BrainTrackerAppTheme.Base" parent="@style/AppTheme">
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
         <item name="colorPrimary">@color/primary_main</item>
@@ -11,4 +8,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
+
+    <style name="BrainTrackerAppTheme" parent="BrainTrackerAppTheme.Base"/>
 </resources>

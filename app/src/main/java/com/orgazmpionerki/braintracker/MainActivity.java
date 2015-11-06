@@ -13,16 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintracker.R;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.orgazmpionerki.braintracker.auth.AuthActivity;
 import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
 import com.orgazmpionerki.braintracker.fragment.BaseFragment;
@@ -39,6 +39,7 @@ import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceControll
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements WiFiStateChangeListener, OnChangePointsListener {
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
+        CrashlyticsCore.getInstance().logException(new Exception("Create fabric exception"));
 
         setContentView(R.layout.activity_main);
 
@@ -77,17 +80,15 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_about).withIcon(FontAwesome.Icon.faw_info).withIdentifier(DRAWER_IDENTIFIER_ABOUT)
                 )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        if (iDrawerItem != null) {
-                            onDrawerItemClicked(iDrawerItem.getIdentifier());
-                        } else {
-                            onDrawerItemClicked(DRAWER_IDENTIFIER_TRACKER);
-                            mDrawerResult.setSelection(DRAWER_IDENTIFIER_TRACKER);
+                .withOnDrawerItemClickListener((adapterView, view, position, id, iDrawerItem) -> {
+                            if (iDrawerItem != null) {
+                                onDrawerItemClicked(iDrawerItem.getIdentifier());
+                            } else {
+                                onDrawerItemClicked(DRAWER_IDENTIFIER_TRACKER);
+                                mDrawerResult.setSelection(DRAWER_IDENTIFIER_TRACKER);
+                            }
                         }
-                    }
-                })
+                )
                 .build();
 
         if (Preferences.getBeginDate(this) == 0L) {
