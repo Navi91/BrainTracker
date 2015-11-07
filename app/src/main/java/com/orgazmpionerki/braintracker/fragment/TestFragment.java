@@ -1,7 +1,5 @@
 package com.orgazmpionerki.braintracker.fragment;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,19 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 
 import com.braintracker.R;
-import com.crashlytics.android.core.CrashlyticsCore;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.Wearable;
-import com.orgazmpionerki.braintracker.canvas.animator.BrainProgressAnimator;
-import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
-import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
-import com.orgazmpionerki.braintracker.util.Tracer;
 import com.orgazmpionerki.braintracker.wear.WearController;
-
-import java.util.List;
 
 /**
  * Created by Dmitriy on 29.06.2015.
@@ -103,18 +90,34 @@ public class TestFragment extends BaseFragment {
     private final String mGoogleAccountType = "com.google";
 
     private void getAccounts() {
-        AccountManager accountManager = AccountManager.get(getActivity());
-        Account[] accounts = accountManager.getAccountsByType(mGoogleAccountType);
+//        AccountManager accountManager = AccountManager.get(getActivity());
+//        Account[] accounts = accountManager.getAccountsByType(mGoogleAccountType);
+//
+//        Account googleAccount = null;
+//        for (Account account : accounts) {
+//            Tracer.debug("account_debug", accountManager.getPassword(account));
+//            googleAccount = account;
+//
+//        }
+//
+//        if (googleAccount != null) {
+//
+//        }
 
-        Account googleAccount = null;
-        for (Account account : accounts) {
-            Tracer.debug("account_debug", account.name);
-            googleAccount = account;
-        }
-
-        if (googleAccount != null) {
-
-        }
+//        AccountManager.get(getActivity()).getAuthTokenByFeatures("com.google", "oauth2:https://gdata.youtube.com", null, getActivity(),
+//                null, null, (future) -> {
+//                    try {
+//                        Bundle bundle = future.getResult();
+//                        String acc_name = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
+//                        String auth_token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
+//                        Preferences.putAccessKey(getActivity(), auth_token);
+//
+//                        Tracer.debug("account_debug", "name: " + acc_name + "; token: " + auth_token);
+//
+//                    } catch (Exception e) {
+//                        Tracer.debug("account_debug", e.getClass().getSimpleName() + ": " + e.getMessage());
+//                    }
+//                }, null);
     }
 
     @Override

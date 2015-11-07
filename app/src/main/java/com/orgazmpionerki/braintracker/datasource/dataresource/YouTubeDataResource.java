@@ -2,7 +2,7 @@ package com.orgazmpionerki.braintracker.datasource.dataresource;
 
 import android.content.Context;
 
-import com.orgazmpionerki.braintracker.auth.tokens.TokensTask;
+import com.orgazmpionerki.braintracker.auth.youtube.YoutubeHttpTokensTask;
 import com.orgazmpionerki.braintracker.notification.WifiController;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.YoutubeDataElement;
@@ -98,7 +98,7 @@ public class YouTubeDataResource extends DataResource {
     }
 
     private boolean refreshAccessKey(Context context) {
-        return new TokensTask(context, Preferences.getAuthCode(context)).refresh();
+        return new YoutubeHttpTokensTask(context, Preferences.getAuthCode(context)).refresh();
     }
 
     private IDataElement createDataElement(JSONObject video, String accessKey) {

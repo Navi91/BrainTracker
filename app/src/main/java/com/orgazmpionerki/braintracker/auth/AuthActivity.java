@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.auth.tokens.TokenRetrievedListener;
 import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
-import com.orgazmpionerki.braintracker.auth.tokens.TokensTask;
+import com.orgazmpionerki.braintracker.auth.youtube.YoutubeHttpTokensTask;
 import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.Preferences;
 
@@ -59,7 +59,7 @@ public class AuthActivity extends AppCompatActivity implements OnAuthListener, T
     @Override
     public void onAuthorized(String authCode) {
         Preferences.putAuthCode(this, authCode);
-        new Thread(new TokensTask(this, authCode, this)).start();
+        new Thread(new YoutubeHttpTokensTask(this, authCode, this)).start();
     }
 
     @Override

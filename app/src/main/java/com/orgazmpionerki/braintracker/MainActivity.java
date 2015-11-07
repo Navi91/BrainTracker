@@ -1,5 +1,6 @@
 package com.orgazmpionerki.braintracker;
 
+import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
@@ -39,8 +40,9 @@ import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceControll
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.Tracer;
 
-import io.fabric.sdk.android.Fabric;
 import java.util.Calendar;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements WiFiStateChangeListener, OnChangePointsListener {
     private static final String BUNDLE_CURRENT_DRAWER_ITEM = "com.orgazmpionerki.braintracker.bundle_current_drawer_item";
@@ -60,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        CrashlyticsCore.getInstance().logException(new Exception("Create fabric exception"));
 
         setContentView(R.layout.activity_main);
 
@@ -134,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     public void startAuthorisationForYouTube() {
         Intent intent = new Intent(this, AuthActivity.class);
         startActivityForResult(intent, AUTH_REQUEST);
+
+//        String[] accountTypes = new String[]{"com.google"};
+//        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+//                null, false, null, null, null, null);
+//        startActivityForResult(intent, AUTH_REQUEST);
+//        startActivity(intent);
     }
 
     @Override
@@ -162,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
 
     private void processAuthorisationResult(Intent data) {
         Tokens tokens = (Tokens) data.getSerializableExtra(AuthActivity.EXTRA_TOKENS);
-
         traceResult(tokens);
 
         startBrainTrackerService();

@@ -1,0 +1,20 @@
+package com.orgazmpionerki.braintracker;
+
+import android.app.Application;
+
+import com.crashlytics.android.Crashlytics;
+import com.orgazmpionerki.braintracker.util.Tracer;
+
+import io.fabric.sdk.android.Fabric;
+
+/**
+ * Created by Dmitriy on 03.11.2015.
+ */
+public class App extends Application {
+    @Override
+    public void onCreate() {
+        Tracer.debug("start_debug", "onCreate");
+        super.onCreate();
+        Fabric.with(this, new Crashlytics());
+    }
+}

@@ -1,7 +1,11 @@
-package com.orgazmpionerki.braintracker.auth.tokens;
+package com.orgazmpionerki.braintracker.auth.youtube;
 
 import android.content.Context;
 
+import com.orgazmpionerki.braintracker.auth.AuthTokenTask;
+import com.orgazmpionerki.braintracker.auth.tokens.TokenParser;
+import com.orgazmpionerki.braintracker.auth.tokens.TokenRetrievedListener;
+import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
 import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.StreamConverter;
@@ -25,24 +29,25 @@ import java.util.List;
 /**
  * This task exchanges the authorization code for an Access Token and a Refresh Token, when complete it will Log these out to the console, in a development environment you would save them to the shared preferences so you can use them for other calls to the YouTube API
  */
-public class TokensTask implements Runnable {
+public class YoutubeHttpTokensTask implements AuthTokenTask {
     // The authcode you obtained when the user granted your app access to the
     // YouTube account
     private final String mAuthCode;
     private Context mContext;
     private TokenRetrievedListener mRetrievedListener;
 
-    public TokensTask(Context context, String authCode) {
+    public YoutubeHttpTokensTask(Context context, String authCode) {
         mContext = context;
         mAuthCode = authCode;
     }
 
-    public TokensTask(Context context, String authCode, TokenRetrievedListener retrievedListener) {
+    public YoutubeHttpTokensTask(Context context, String authCode, TokenRetrievedListener retrievedListener) {
         mContext = context;
         mAuthCode = authCode;
         mRetrievedListener = retrievedListener;
     }
 
+    @Override
     public boolean refresh() {
         try {
             HttpResponse response;
