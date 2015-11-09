@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 
@@ -115,7 +114,7 @@ public class PopupService extends Service {
 
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
-        mLayout = (LinearLayout) LinearLayout.inflate(this, R.layout.popup, null);
+        mLayout = (LinearLayout) LinearLayout.inflate(this, R.layout.v_popup, null);
         mBrainProgressView = (BrainProgressView) mLayout.findViewById(R.id.image);
         mPopupTextSwitcher = (TextSwitcher) mLayout.findViewById(R.id.title);
         mPopupTextSwitcher.setInAnimation(this, R.anim.text_slide_in_top);

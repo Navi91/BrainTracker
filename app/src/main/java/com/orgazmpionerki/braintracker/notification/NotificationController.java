@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.MainActivity;
+import com.orgazmpionerki.braintracker.activity.MainActivity;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;

@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
@@ -63,7 +61,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.chapters_fragment, container, false);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.f_statistics, container, false);
 
         mSpinner = (Spinner) layout.findViewById(R.id.spinner);
         mTarget = new ValueTextView(getResources().getString(R.string.statistics_target_caption), (TextView) layout.findViewById(R.id.target));

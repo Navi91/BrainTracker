@@ -42,13 +42,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.orgazmpionerki.braintracker.MainActivity">
+        <activity android:name="com.orgazmpionerki.braintracker.activity.LogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.orgazmpionerki.braintracker.activity.MainActivity" />
+        <activity android:name="com.orgazmpionerki.braintracker.activity.WelcomeActivity" />
         <activity
             android:name="com.orgazmpionerki.braintracker.auth.AuthActivity"
             android:configChanges="orientation|screenSize"

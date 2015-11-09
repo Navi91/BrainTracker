@@ -1,6 +1,5 @@
-package com.orgazmpionerki.braintracker;
+package com.orgazmpionerki.braintracker.activity;
 
-import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
@@ -18,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintracker.R;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -42,8 +39,6 @@ import com.orgazmpionerki.braintracker.util.Tracer;
 
 import java.util.Calendar;
 
-import io.fabric.sdk.android.Fabric;
-
 public class MainActivity extends AppCompatActivity implements WiFiStateChangeListener, OnChangePointsListener {
     private static final String BUNDLE_CURRENT_DRAWER_ITEM = "com.orgazmpionerki.braintracker.bundle_current_drawer_item";
 
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.a_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -98,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_CURRENT_DRAWER_ITEM)) {
             onDrawerItemClicked(savedInstanceState.getInt(BUNDLE_CURRENT_DRAWER_ITEM, 0));
         } else {
-//        BaseFragment fragment = ServiceFragment.newInstance();
-//        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            BaseFragment fragment = ServiceFragment.newInstance();
+            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
-            BaseFragment testFragment = TestFragment.newInstance();
-            getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
+//            BaseFragment testFragment = TestFragment.newInstance();
+//            getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
         }
 
         mBrainServiceController = new BrainTrackerServiceController();
@@ -244,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
 
     private void showAboutDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View aboutView = inflater.inflate(R.layout.about_dialog, null, false);
+        View aboutView = inflater.inflate(R.layout.d_about, null, false);
         TextView versionTextView = (TextView) aboutView.findViewById(R.id.about_version);
 
         try {

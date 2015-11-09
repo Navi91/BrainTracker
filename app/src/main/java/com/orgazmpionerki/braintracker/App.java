@@ -11,6 +11,8 @@ import io.fabric.sdk.android.Fabric;
  * Created by Dmitriy on 03.11.2015.
  */
 public class App extends Application {
+    public static final boolean DEBUG = false;
+
     @Override
     public void onCreate() {
         Tracer.debug("start_debug", "onCreate");

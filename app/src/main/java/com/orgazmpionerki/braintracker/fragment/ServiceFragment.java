@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.MainActivity;
+import com.orgazmpionerki.braintracker.activity.MainActivity;
 import com.orgazmpionerki.braintracker.canvas.view.AnimationTextView;
 import com.orgazmpionerki.braintracker.canvas.animator.PowerButtonAnimator;
 import com.orgazmpionerki.braintracker.canvas.animator.ServiceStatusAnimator;
@@ -43,7 +43,7 @@ public class ServiceFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.service_fragment, null, true);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.f_service, null, true);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         mPowerButton = (AnimationTextView) layout.findViewById(R.id.start_button);

@@ -28,7 +28,7 @@ public class AuthActivity extends AppCompatActivity implements OnAuthListener, T
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_oauth);
+        setContentView(R.layout.a_oauth);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

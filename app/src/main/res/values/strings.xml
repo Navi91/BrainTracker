@@ -77,5 +77,9 @@
     <string name="about_develop_descr">Dmitriy Krasnov</string>
     <string name="about_design_descr">Valery Suhotko</string>
 
+    <!-- Welcome -->
+    <string name="a_welcome_title">Welcome</string>
+    <string name="f_welcome_info">Press button for YouTube authorization</string>
+
 
 </resources>
