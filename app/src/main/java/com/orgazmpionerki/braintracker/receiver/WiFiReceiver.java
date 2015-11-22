@@ -3,8 +3,8 @@ package com.orgazmpionerki.braintracker.receiver;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.util.Constants;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

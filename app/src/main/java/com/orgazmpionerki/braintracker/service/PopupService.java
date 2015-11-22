@@ -14,10 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 
 import com.braintracker.R;
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.canvas.animator.BrainProgressAnimator;
 import com.orgazmpionerki.braintracker.canvas.view.BrainProgressView;
 import com.orgazmpionerki.braintracker.util.Preferences;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 public class PopupService extends Service {
     private static final String DEBUG_TAG = "popup_service_debug";

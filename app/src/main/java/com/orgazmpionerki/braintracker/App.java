@@ -3,7 +3,7 @@ package com.orgazmpionerki.braintracker;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
-import com.orgazmpionerki.braintracker.util.Tracer;
+import com.dkrasnov.util_android_lib.Tracer;
 
 import io.fabric.sdk.android.Fabric;
 

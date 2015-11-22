@@ -3,11 +3,11 @@ package com.orgazmpionerki.braintracker.datasource.updaterequest;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
 import com.orgazmpionerki.braintracker.datasource.dataresource.IDataResource;
 import com.orgazmpionerki.braintracker.datasource.updateresponse.IUpdateResponse;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 /**
  * Created by Dmitriy on 11.03.2015.

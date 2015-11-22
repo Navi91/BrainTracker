@@ -1,9 +1,10 @@
 package com.orgazmpionerki.braintracker.auth.tokens;
 
+import com.dkrasnov.util_android_lib.Tracer;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 /** Parses the JSON recieved from Google when we are swapping our auth code for access
  * 

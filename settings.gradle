@@ -1,1 +1,2 @@
-include ':app', ':wear'
+include ':app', ':wear', ':utilandroidlib'
+project(':utilandroidlib').projectDir = new File(settingsDir, '../util-android-lib/app')

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintracker.R;
+import com.dkrasnov.util_android_lib.Tracer;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -27,7 +28,6 @@ import com.orgazmpionerki.braintracker.fragment.BaseFragment;
 import com.orgazmpionerki.braintracker.fragment.ServiceFragment;
 import com.orgazmpionerki.braintracker.fragment.SettingsFragment;
 import com.orgazmpionerki.braintracker.fragment.StatisticsFrament;
-import com.orgazmpionerki.braintracker.fragment.TestFragment;
 import com.orgazmpionerki.braintracker.notification.OnChangePointsListener;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
@@ -35,7 +35,6 @@ import com.orgazmpionerki.braintracker.service.BrainTrackerService;
 import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
 import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceController;
 import com.orgazmpionerki.braintracker.util.Preferences;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import java.util.Calendar;
 

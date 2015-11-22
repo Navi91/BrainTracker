@@ -2,6 +2,7 @@ package com.orgazmpionerki.braintracker.auth.youtube;
 
 import android.content.Context;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.auth.AuthTokenTask;
 import com.orgazmpionerki.braintracker.auth.tokens.TokenParser;
 import com.orgazmpionerki.braintracker.auth.tokens.TokenRetrievedListener;
@@ -9,7 +10,6 @@ import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
 import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.StreamConverter;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

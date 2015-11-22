@@ -3,6 +3,7 @@ package com.orgazmpionerki.braintracker.datasource;
 import android.content.Context;
 import android.os.Handler;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
 import com.orgazmpionerki.braintracker.datasource.dataresource.DataResourceContainer;
 import com.orgazmpionerki.braintracker.datasource.dataresource.IDataResource;
@@ -10,7 +11,6 @@ import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequestListener;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.UpdateRequest;
 import com.orgazmpionerki.braintracker.util.TimeManager;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import java.util.ArrayList;
 import java.util.List;

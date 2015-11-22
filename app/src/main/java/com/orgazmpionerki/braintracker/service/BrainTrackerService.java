@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.notification.NotificationController;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 public class BrainTrackerService extends Service implements WiFiStateChangeListener {
     public final static String DEBUG_TAG = "brain_tracker_service_debug";

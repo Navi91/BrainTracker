@@ -2,8 +2,8 @@ package com.orgazmpionerki.braintracker.database.tables;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 /**
  * Created by Dmitriy on 10.03.2015.

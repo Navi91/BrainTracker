@@ -2,6 +2,7 @@ package com.orgazmpionerki.braintracker.datasource.dataresource;
 
 import android.content.Context;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.auth.youtube.YoutubeHttpTokensTask;
 import com.orgazmpionerki.braintracker.notification.WifiController;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
@@ -12,7 +13,6 @@ import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.MetricsConverter;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.StreamConverter;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

@@ -1,8 +1,8 @@
 package com.orgazmpionerki.braintracker.database;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.tables.DataResourceInfoTable;
 import com.orgazmpionerki.braintracker.database.tables.WatchHistoryTable;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

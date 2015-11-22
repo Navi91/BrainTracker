@@ -2,6 +2,7 @@ package com.orgazmpionerki.braintracker.database;
 
 import java.util.Calendar;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.tables.DataResourceInfoTable;
 import com.orgazmpionerki.braintracker.database.tables.WatchHistoryTable;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
@@ -9,7 +10,6 @@ import com.orgazmpionerki.braintracker.datasource.dataresource.DataResourceType;
 import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.TimeManager;
-import com.orgazmpionerki.braintracker.util.Tracer;
 
 import android.content.ContentValues;
 import android.content.Context;
