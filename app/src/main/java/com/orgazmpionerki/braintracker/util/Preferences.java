@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class Preferences {
+
     private static Preferences mInstance;
 
     private static final String DEFAULT_CATEGORY = "{\"1\": 1, \"2\": 1, \"3\": -1, \"4\": -1, \"5\": -1, \"6\": -1, \"7\": -1, \"8\": -1, \"9\": -1, \"10\": -1, \"11\": -2, \"12\": -1, \"13\": 1, \"14\": 1, \"15\": -2, \"16\": -1, \"17\": -1, \"18\": 1, \"19\": 1, \"20\": -2, \"21\": -2, \"22\": -1, \"23\": -2, \"24\": -2, \"25\": 1, \"26\": 2, \"27\": 2, \"28\": 2, \"29\": -1, \"30\": -1, \"31\": -2, \"32\": -1, \"33\": 1, \"34\": -1, \"35\": 1, \"36\": -1, \"37\": 1, \"38\": -1, \"39\": -1, \"40\": -1, \"41\": -1, \"42\": 1, \"43\": -1, \"44\": 1, \"45\": -1 }";
@@ -20,25 +21,16 @@ public class Preferences {
     }
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences("com.braintracker.app", Context.MODE_MULTI_PROCESS | Context.MODE_PRIVATE);
+        return context.getSharedPreferences("com.braintracker.app", Context.MODE_MULTI_PROCESS);
+    }
+
+    private static void putString(Context context, String prefKey, String value) {
+        getSharedPreferences(context).edit().putString(prefKey, value).commit();
     }
 
     // ------------------------ Category ---------------------------------
     public static String getCategory(Context context) {
         return getSharedPreferences(context).getString("category", DEFAULT_CATEGORY);
-    }
-
-    public static void putCategory(Context context, String s) {
-        getSharedPreferences(context).edit().putString("category", s).commit();
-    }
-
-    // ------------------------ Key time ---------------------------------
-    public static long getKeyTime(Context context) {
-        return getSharedPreferences(context).getLong("key_time", 0L);
-    }
-
-    public static void putKeyTime(Context context, long time) {
-        getSharedPreferences(context).edit().putLong("key_time", time).commit();
     }
 
     // ------------------------ Access Key ---------------------------------
@@ -114,5 +106,15 @@ public class Preferences {
     // ------------------------ Show Popup Notification Setting ---------------------------------
     public static boolean getShowPopupNotification(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("setting_android_notification_key", false);
+    }
+
+    private static final String TOKEN_PREF_KEY = "token_pref_key";
+
+    public static String getToken(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(TOKEN_PREF_KEY, "");
+    }
+
+    public static void setToken(Context context, String token) {
+        putString(context, TOKEN_PREF_KEY, token);
     }
 }

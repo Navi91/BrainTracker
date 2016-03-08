@@ -19,7 +19,6 @@ public class UpdateDataRequestExecutor {
     private static final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
     private static int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
 
-    private final BlockingQueue<Runnable> mRequestQueue;
     private ThreadPoolExecutor mRequestThreadPoolExecutor;
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -30,8 +29,7 @@ public class UpdateDataRequestExecutor {
     };
 
     public UpdateDataRequestExecutor() {
-        mRequestQueue = new LinkedBlockingDeque<Runnable>();
-        mRequestThreadPoolExecutor = new ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES, KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, mRequestQueue);
+        mRequestThreadPoolExecutor = new ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES, KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT,  new LinkedBlockingDeque<>());
     }
 
     public void addRequest(IUpdateRequest request) {
