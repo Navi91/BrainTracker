@@ -11,7 +11,7 @@ import com.orgazmpionerki.braintracker.util.Preferences;
 public class GoogleAuthToken {
 
     public static boolean exist(Context context) {
-        return TextUtils.isEmpty(Preferences.getToken(context));
+        return !TextUtils.isEmpty(Preferences.getToken(context));
     }
 
     public static void setToken(Context context, String token) {
@@ -20,5 +20,9 @@ public class GoogleAuthToken {
 
     public static String getToken(Context context) {
         return Preferences.getToken(context);
+    }
+
+    public static void clear(Context context) {
+        Preferences.setToken(context, "");
     }
 }

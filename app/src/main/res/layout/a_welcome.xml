@@ -6,14 +6,44 @@
 
     <include layout="@layout/support_tool_bar" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/toolbar"
-        android:background="@color/primary_secondary"
+        android:background="?colorPrimaryDark"
         android:minHeight="100dp"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:text="@string/brain_tracker"
+            android:textColor="@android:color/white"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/welcome_info"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="200dp"
+            android:layout_height="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="?colorPrimaryDark"
+            android:text="@string/get_started"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
 </RelativeLayout>

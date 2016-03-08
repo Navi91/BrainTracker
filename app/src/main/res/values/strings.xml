@@ -80,6 +80,9 @@
     <!-- Welcome -->
     <string name="a_welcome_title">Welcome</string>
     <string name="f_welcome_info">Press button for YouTube authorization</string>
+    <string name="brain_tracker">Brain Tracker</string>
+    <string name="welcome_info">Bla bla bla. \n Pls press below buttons.</string>
+    <string name="get_started">Get Started</string>
 
 
 </resources>
