@@ -33,18 +33,11 @@ public class LogoActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            Tracer.debug("account_trace", "exist token " + GoogleAuthToken.getToken(this));
-
-            if (GoogleAuthToken.exist(this)) {
-                startActivity(new Intent(LogoActivity.this, MainActivity.class));
-            } else {
-                startActivity(new Intent(LogoActivity.this, WelcomeActivity.class));
-            }
-
-            finish();
-        }, LOGO_SHOWING_TIME);
+        if (GoogleAuthToken.exist(this)) {
+            startActivity(new Intent(LogoActivity.this, MainActivity.class));
+        } else {
+            startActivity(new Intent(LogoActivity.this, WelcomeActivity.class));
+        }
     }
 
 }

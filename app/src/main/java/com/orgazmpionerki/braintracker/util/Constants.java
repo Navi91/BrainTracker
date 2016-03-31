@@ -3,7 +3,8 @@ package com.orgazmpionerki.braintracker.util;
 public class Constants {
 
 	// Client ID from https://code.google.com/apis/console API Access
-	public static final String CLIENT_ID = "1083931175059-01ocers4lcvkuebpk55ei7q33683q0nv.apps.googleusercontent.com";
+//	public static final String CLIENT_ID = "1083931175059-01ocers4lcvkuebpk55ei7q33683q0nv.apps.googleusercontent.com";
+	public static final String CLIENT_ID = "1083931175059-n79a6h6h56u5sj25k20l8vuqqp0n7avc.apps.googleusercontent.com ";
 	// public static final String CLIENT_ID = "162895405734-9a6u3q2bakje5h9egk27jarras4h45dp.apps.googleusercontent.com";
 	// Callback URL from https://code.google.com/apis/console API Access
 	public static final String CALLBACK_URL = "http://localhost";
@@ -24,7 +25,4 @@ public class Constants {
 
 	// Day in millis
 	public static final long DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
-
-	// Time between updates
-	public static final int UPDATE_TIME = 1 * 10 * 1000;
 }

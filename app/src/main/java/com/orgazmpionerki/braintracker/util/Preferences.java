@@ -104,7 +104,7 @@ public class Preferences {
     private static final String ACCOUNT_EMAIL_PREF_KEY = "account_email_pref_key";
 
     public static String getAccountEmail(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(ACCOUNT_EMAIL_PREF_KEY, "");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(ACCOUNT_EMAIL_PREF_KEY, null);
     }
 
     public static void setAccountEmail(Context context, String email) {

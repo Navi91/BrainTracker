@@ -4,33 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextSwitcher
-        android:id="@+id/text_switcher"
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"/>
+            android:text="SCALE"
+            android:background="@color/blue"
+            android:textColor="@android:color/white"
+            android:textSize="50sp" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/brain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"/>
-
-    </TextSwitcher>
+            android:scaleType="matrix"
+            android:src="@mipmap/ic_launcher" />
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/test_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:minHeight="70dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="Start test"/>
+        android:layout_centerHorizontal="true"
+        android:minHeight="70dp"
+        android:minWidth="200dp"
+        android:text="Start test" />
 
 </RelativeLayout>

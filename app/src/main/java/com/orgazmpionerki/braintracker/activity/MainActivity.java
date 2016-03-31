@@ -28,6 +28,7 @@ import com.orgazmpionerki.braintracker.fragment.BaseFragment;
 import com.orgazmpionerki.braintracker.fragment.ServiceFragment;
 import com.orgazmpionerki.braintracker.fragment.SettingsFragment;
 import com.orgazmpionerki.braintracker.fragment.StatisticsFrament;
+import com.orgazmpionerki.braintracker.fragment.TestFragment;
 import com.orgazmpionerki.braintracker.notification.OnChangePointsListener;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
@@ -92,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_CURRENT_DRAWER_ITEM)) {
             onDrawerItemClicked(savedInstanceState.getInt(BUNDLE_CURRENT_DRAWER_ITEM, 0));
         } else {
-            BaseFragment fragment = ServiceFragment.newInstance();
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//            BaseFragment fragment = ServiceFragment.newInstance();
+//            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
-//            BaseFragment testFragment = TestFragment.newInstance();
-//            getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
+            BaseFragment testFragment = TestFragment.newInstance();
+            getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
         }
 
         mBrainServiceController = new BrainTrackerServiceController();
@@ -128,12 +129,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
     public void startAuthorisationForYouTube() {
         Intent intent = new Intent(this, AuthActivity.class);
         startActivityForResult(intent, AUTH_REQUEST);
-
-//        String[] accountTypes = new String[]{"com.google"};
-//        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-//                null, false, null, null, null, null);
-//        startActivityForResult(intent, AUTH_REQUEST);
-//        startActivity(intent);
     }
 
     @Override
