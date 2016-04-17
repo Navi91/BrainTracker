@@ -40,13 +40,7 @@ public class TokenRequest extends RequestTaskBase<String> {
     }
 
     @Override
-    public String doRequest() {
-        try {
-            return GoogleAuthUtil.getToken(context, email, scope);
-        } catch (IOException | GoogleAuthException e) {
-            e.printStackTrace();
-            handleException(e);
-            return "";
-        }
+    public String doRequest() throws Exception {
+        return GoogleAuthUtil.getToken(context, email, scope);
     }
 }
