@@ -1,7 +1,6 @@
 package com.orgazmpionerki.braintracker.dataprovider.request;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.dkrasnov.util_android_lib.taskexecutor.request.HandleErrorRequestCallback;
 import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTaskBase;
@@ -35,11 +34,6 @@ public class YouTubeRequest<K> extends RequestTaskBase<K> {
 
     @Override
     public K execute() {
-        if (TextUtils.isEmpty(mAuthToken)) {
-            handleException(new YouTubeTokenError("Token is empty!!!"));
-            return null;
-        }
-
         return super.execute();
     }
 
@@ -53,12 +47,5 @@ public class YouTubeRequest<K> extends RequestTaskBase<K> {
 
     public YouTube getYouTube() {
         return mYouTube;
-    }
-
-    public static class YouTubeTokenError extends Exception {
-
-        public YouTubeTokenError(String message) {
-            super(message);
-        }
     }
 }
