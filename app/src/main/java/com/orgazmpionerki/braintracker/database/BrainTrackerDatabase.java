@@ -6,7 +6,7 @@ import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.database.tables.DataResourceInfoTable;
 import com.orgazmpionerki.braintracker.database.tables.WatchHistoryTable;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
-import com.orgazmpionerki.braintracker.datasource.dataresource.DataResourceType;
+import com.orgazmpionerki.braintracker.datasource.dataresource.ResourceType;
 import com.orgazmpionerki.braintracker.util.Constants;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.TimeManager;
@@ -43,8 +43,7 @@ public class BrainTrackerDatabase {
         mOpen = false;
     }
 
-
-    public void updateResourceLastUpdateTime(DataResourceType type) {
+    public void updateResourceLastUpdateTime(ResourceType type) {
         Tracer.methodEnter(DEBUG_TAG);
         Cursor cursor = mDatabase.rawQuery("select " + DataResourceInfoTable.COLUMN_ID + " FROM " + DataResourceInfoTable.TABLE_RESOURCES + " WHERE " + DataResourceInfoTable.COLUMN_ID + " = ?", new String[]{type.getId()});
         if (cursor == null || cursor.getCount() == 0) {
@@ -61,7 +60,7 @@ public class BrainTrackerDatabase {
         mDatabase.update(DataResourceInfoTable.TABLE_RESOURCES, values, DataResourceInfoTable.COLUMN_ID + " = ?", new String[]{type.getId()});
     }
 
-    public int getResourceLastUpdateTime(DataResourceType type) {
+    public int getResourceLastUpdateTime(ResourceType type) {
         Tracer.methodEnter(DEBUG_TAG);
         Cursor cursor = mDatabase.rawQuery("select " + DataResourceInfoTable.COLUMN_LAST_UPDATE_TIME + " FROM " + DataResourceInfoTable.TABLE_RESOURCES + " WHERE " + DataResourceInfoTable.COLUMN_ID + " = ?", new String[]{type.getId()});
 
@@ -77,7 +76,7 @@ public class BrainTrackerDatabase {
         return result;
     }
 
-    private void addDataResourceInfo(DataResourceType type) {
+    private void addDataResourceInfo(ResourceType type) {
         Tracer.methodEnter(DEBUG_TAG);
         ContentValues values = new ContentValues();
         values.put(DataResourceInfoTable.COLUMN_ID, type.getId());

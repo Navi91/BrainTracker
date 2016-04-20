@@ -9,18 +9,18 @@ import java.util.Map;
  * Created by Dmitriy on 11.03.2015.
  */
 public class DataResourceContainer {
-    private Map<DataResourceType, IDataResource> mDataResourceProviders;
+    private Map<ResourceType, IDataResource> mDataResourceProviders;
 
     public DataResourceContainer(Context context) {
-        mDataResourceProviders = new HashMap<DataResourceType, IDataResource>();
+        mDataResourceProviders = new HashMap<ResourceType, IDataResource>();
 
-        mDataResourceProviders.put(DataResourceType.YOUTUBE, new YouTubeDataResource(context));
-        mDataResourceProviders.put(DataResourceType.FACEBOOK, new FacebookDataResource(context));
-        mDataResourceProviders.put(DataResourceType.TWITTER, new TwitterDataResource(context));
-        mDataResourceProviders.put(DataResourceType.VKONTAKTE, new VkontakteDataResource(context));
+        mDataResourceProviders.put(ResourceType.YOUTUBE, new YouTubeDataResource(context));
+        mDataResourceProviders.put(ResourceType.FACEBOOK, new FacebookDataResource(context));
+        mDataResourceProviders.put(ResourceType.TWITTER, new TwitterDataResource(context));
+        mDataResourceProviders.put(ResourceType.VKONTAKTE, new VkontakteDataResource(context));
     }
 
-    public Map<DataResourceType, IDataResource> getDataResources() {
+    public Map<ResourceType, IDataResource> getDataResources() {
         return mDataResourceProviders;
     }
 }

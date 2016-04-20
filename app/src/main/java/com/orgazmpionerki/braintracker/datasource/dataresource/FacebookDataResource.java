@@ -8,7 +8,7 @@ import com.orgazmpionerki.braintracker.datasource.updateresponse.IUpdateResponse
  * Created by Dmitriy on 10.03.2015.
  */
 public class FacebookDataResource extends DataResource {
-    private final static DataResourceType TYPE = DataResourceType.FACEBOOK;
+    private final static ResourceType TYPE = ResourceType.FACEBOOK;
 
     public FacebookDataResource(Context context) {
         super(context);
@@ -25,7 +25,7 @@ public class FacebookDataResource extends DataResource {
     }
 
     @Override
-    public DataResourceType getType() {
+    public ResourceType getType() {
         return TYPE;
     }
 }

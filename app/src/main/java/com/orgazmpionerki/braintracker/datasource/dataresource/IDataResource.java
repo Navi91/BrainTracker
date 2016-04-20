@@ -10,5 +10,5 @@ public interface IDataResource {
 
     public boolean isEnabled();
 
-    public DataResourceType getType();
+    public ResourceType getType();
 }

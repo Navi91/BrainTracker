@@ -34,6 +34,7 @@ import com.google.api.services.youtube.model.PlaylistSnippet;
 import com.google.api.services.youtube.model.PlaylistStatus;
 import com.google.api.services.youtube.model.ResourceId;
 import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.dataprovider.VideoData;
 import com.orgazmpionerki.braintracker.dataprovider.request.YouTubeGetPlaylistItemsRequest;
 import com.orgazmpionerki.braintracker.dataprovider.request.YouTubeGetVideosInfoRequest;
 import com.orgazmpionerki.braintracker.dataprovider.request.YouTubeGetWatchHistoryIdRequest;
@@ -112,7 +113,7 @@ public class TestFragment extends BaseFragment {
             RequestTaskBase<List<String>> listVideoRequest = new YouTubeGetPlaylistItemsRequest(getActivity(), requestTask.getResult(), 10, requestTask1 -> {
                 Tracer.debug("test_trace", "Videos " + requestTask1.getResult().toString());
 
-                RequestTaskBase<List<String>> videoInfoRequest = new YouTubeGetVideosInfoRequest(requestTask1.getResult(), getActivity(), requestTask2 -> Tracer.debug("test_trace", "Categories " + requestTask2.getResult().toString()));
+                RequestTaskBase<List<VideoData>> videoInfoRequest = new YouTubeGetVideosInfoRequest(requestTask1.getResult(), getActivity(), requestTask2 -> Tracer.debug("test_trace", "Categories " + requestTask2.getResult().toString()));
                 executor.asyncRequest(videoInfoRequest);
             });
 

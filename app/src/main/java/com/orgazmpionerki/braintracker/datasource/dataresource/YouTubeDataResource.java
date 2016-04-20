@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class YouTubeDataResource extends DataResource {
     private final static String DEBUG_TAG = "youtube_data_resource_debug";
-    private final static DataResourceType TYPE = DataResourceType.YOUTUBE;
+    private final static ResourceType TYPE = ResourceType.YOUTUBE;
 
     public YouTubeDataResource(Context context) {
         super(context);
@@ -93,7 +93,7 @@ public class YouTubeDataResource extends DataResource {
     }
 
     @Override
-    public DataResourceType getType() {
+    public ResourceType getType() {
         return TYPE;
     }
 

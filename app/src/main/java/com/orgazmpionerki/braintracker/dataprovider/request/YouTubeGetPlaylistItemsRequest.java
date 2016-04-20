@@ -7,6 +7,10 @@ import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTaskCallback;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.Video;
+import com.orgazmpionerki.braintracker.dataprovider.VideoData;
+import com.orgazmpionerki.braintracker.datasource.dataresource.ResourceType;
+import com.orgazmpionerki.braintracker.util.MetricsConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +44,14 @@ public class YouTubeGetPlaylistItemsRequest extends YouTubeRequest<List<String>>
         PlaylistItemListResponse response = request.execute();
         List<String> ides = new ArrayList<>();
 
+
+
+
         for (PlaylistItem playlistItem: response.getItems()) {
             ides.add(playlistItem.getContentDetails().getVideoId());
         }
 
         return ides;
     }
+
 }
