@@ -7,6 +7,7 @@ public class WatchHistoryTable {
 	// Database table
 	public static final String TABLE_HISTORY = "history";
 	public static final String COLUMN_ID = "_id";
+	public static final String COLUMN_RESOURCE_ID = "resource_id";
 	public static final String COLUMN_VIDEO_ID = "video_id";
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_CATEGORY = "category";
