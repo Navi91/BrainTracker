@@ -12,18 +12,17 @@ import com.google.api.services.youtube.model.ChannelListResponse;
  */
 public class YouTubeGetWatchHistoryIdRequest extends YouTubeRequest<String> {
 
-    public YouTubeGetWatchHistoryIdRequest(Context context, RequestTaskCallback<String> callback) {
-        super(context, callback);
+    public YouTubeGetWatchHistoryIdRequest(Context context) {
+        super(context);
     }
 
-    public YouTubeGetWatchHistoryIdRequest(Context context, HandleErrorRequestCallback<String> errorRequestCallback) {
-        super(context, errorRequestCallback);
+    public YouTubeGetWatchHistoryIdRequest(Context context, RequestTaskCallback<String> callback) {
+        super(context, callback);
     }
 
     @Override
     public String doRequest() throws Exception {
         YouTube.Channels.List list = getYouTube().channels().list("contentDetails").setMine(true).setOauthToken(getToken());
-
         ChannelListResponse response = list.execute();
 
         return response.getItems().get(0).getContentDetails().getRelatedPlaylists().getWatchHistory();

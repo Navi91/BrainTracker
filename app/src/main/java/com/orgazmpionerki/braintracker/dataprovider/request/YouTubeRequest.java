@@ -2,6 +2,7 @@ package com.orgazmpionerki.braintracker.dataprovider.request;
 
 import android.content.Context;
 
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.dkrasnov.util_android_lib.taskexecutor.request.HandleErrorRequestCallback;
 import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTaskBase;
 import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTaskCallback;
@@ -15,6 +16,11 @@ public class YouTubeRequest<K> extends RequestTaskBase<K> {
     private String mAuthToken;
     private Context mContext;
     private YouTube mYouTube;
+
+    public YouTubeRequest(Context context) {
+        super();
+        initYouTubeElements(context);
+    }
 
     public YouTubeRequest(Context context, RequestTaskCallback<K> callback) {
         super(callback);
@@ -47,5 +53,11 @@ public class YouTubeRequest<K> extends RequestTaskBase<K> {
 
     public YouTube getYouTube() {
         return mYouTube;
+    }
+
+    @Override
+    protected void handleException(Exception e) {
+        CrashlyticsCore.getInstance().logException(e);
+        super.handleException(e);
     }
 }
