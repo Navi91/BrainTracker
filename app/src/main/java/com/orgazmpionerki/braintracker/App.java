@@ -19,6 +19,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+
+        Tracer.setDefaultTag("brain_tracker_trace");
     }
 
     @Override

@@ -32,6 +32,7 @@ public class YouTubeGetNewVideoRequest extends RequestTaskBase<List<VideoData>> 
 
         if (TextUtils.isEmpty(historyId)) {
             historyId = new YouTubeGetWatchHistoryIdRequest(context).execute();
+            Preferences.setHistoryId(context, historyId);
         }
 
         if (TextUtils.isEmpty(historyId)) {
@@ -48,6 +49,7 @@ public class YouTubeGetNewVideoRequest extends RequestTaskBase<List<VideoData>> 
             }
         }
 
+        result = new WriteVideosToDatabaseRequest(result, null).execute();
         return result;
     }
 

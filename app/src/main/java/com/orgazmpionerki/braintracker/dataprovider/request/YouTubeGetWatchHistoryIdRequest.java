@@ -2,6 +2,7 @@ package com.orgazmpionerki.braintracker.dataprovider.request;
 
 import android.content.Context;
 
+import com.dkrasnov.util_android_lib.Tracer;
 import com.dkrasnov.util_android_lib.taskexecutor.request.HandleErrorRequestCallback;
 import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTaskCallback;
 import com.google.api.services.youtube.YouTube;
@@ -25,6 +26,8 @@ public class YouTubeGetWatchHistoryIdRequest extends YouTubeRequest<String> {
         YouTube.Channels.List list = getYouTube().channels().list("contentDetails").setMine(true).setOauthToken(getToken());
         ChannelListResponse response = list.execute();
 
-        return response.getItems().get(0).getContentDetails().getRelatedPlaylists().getWatchHistory();
+        String historyId = response.getItems().get(0).getContentDetails().getRelatedPlaylists().getWatchHistory();
+        Tracer.debug("Get history id " + historyId);
+        return historyId;
     }
 }

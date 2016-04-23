@@ -54,13 +54,15 @@ public class Preferences {
         getPreferences(context).edit().putString("auth_code", code).commit();
     }
 
+    private static final String LAST_UPDATE_TIME_PREF_KEY = "youtube_history_id_pref_key";
+
     // ------------------------ Last Update Time -------------------------------
     public static long getLastUpdateTime(Context context) {
-        return getPreferences(context).getLong("last_update_time", Calendar.getInstance().getTimeInMillis());
+        return getPreferences(context).getLong(LAST_UPDATE_TIME_PREF_KEY, 0L);
     }
 
-    public static void putLastUpdateTime(Context context, long time) {
-        getPreferences(context).edit().putLong("last_update_time", time).commit();
+    public static void setLastUpdateTime(Context context, long time) {
+        getPreferences(context).edit().putLong(LAST_UPDATE_TIME_PREF_KEY, time).commit();
     }
 
     // ------------------------- Statistics Period -------------------------------
@@ -120,4 +122,5 @@ public class Preferences {
     public static void setHistoryId(Context context, String id) {
         putString(context, YOUTUBE_HISTORY_ID_PREF_KEY, id);
     }
+
 }
