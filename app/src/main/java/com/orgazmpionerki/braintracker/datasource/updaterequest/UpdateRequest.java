@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.dkrasnov.util_android_lib.Tracer;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.dataprovider.datacontent.IDataElement;
 import com.orgazmpionerki.braintracker.datasource.dataresource.IDataResource;
 import com.orgazmpionerki.braintracker.datasource.updateresponse.IUpdateResponse;
@@ -74,7 +74,7 @@ public class UpdateRequest implements IUpdateRequest {
 
     private boolean writeDataToDatabase(IUpdateResponse response) {
         boolean writeResult = false;
-        BrainTrackerDatabase database = new BrainTrackerDatabase(mContext);
+        BrainTrackerDatabaseImpl database = new BrainTrackerDatabaseImpl(mContext);
         database.open();
 
         // get points count before request

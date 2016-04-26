@@ -72,7 +72,7 @@ public class YouTubeRequestDataServer implements RequestDataServer {
         Tracer.methodEnter();
         Preferences.setLastUpdateTime(context, calendar.getTimeInMillis());
 
-       currentUpdateRequest = new YouTubeGetNewVideoRequest(context, new HandleErrorRequestCallback<List<VideoData>>() {
+        currentUpdateRequest = new YouTubeGetNewVideoRequest(context, new HandleErrorRequestCallback<List<VideoData>>() {
             @Override
             public void onResult(RequestTask<List<VideoData>> requestTask) {
                 if (!requestTask.cancelled()) {

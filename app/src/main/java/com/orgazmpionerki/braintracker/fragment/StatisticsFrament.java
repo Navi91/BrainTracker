@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequestListener;
@@ -37,7 +37,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     private StatisticsPeriod mPeriod;
     private int mTargetValue;
     private int mPointsValue;
-    private BrainTrackerDatabase mDatabase;
+    private BrainTrackerDatabaseImpl mDatabase;
 
     public enum StatisticsPeriod {
         DAY, WEEK, MONTH
@@ -55,7 +55,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (mDatabase == null) {
-            mDatabase = new BrainTrackerDatabase(getActivity());
+            mDatabase = new BrainTrackerDatabaseImpl(getActivity());
         }
     }
 

@@ -3,7 +3,7 @@ package com.orgazmpionerki.braintracker.database.tables;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.dkrasnov.util_android_lib.Tracer;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
 
 /**
  * Created by Dmitriy on 10.03.2015.
@@ -17,14 +17,14 @@ public class DataResourceInfoTable {
     private static final String DATABASE_CREATE = "create table " + TABLE_RESOURCES + "(" + COLUMN_ID + " string primary key not null, " + COLUMN_LAST_UPDATE_TIME + " integer not null);";
 
     public static void onCreate(SQLiteDatabase database) {
-        Tracer.methodEnter(BrainTrackerDatabase.DEBUG_TAG);
+        Tracer.methodEnter(BrainTrackerDatabaseImpl.DEBUG_TAG);
         database.execSQL(DATABASE_CREATE);
     }
 
     // Upgrade to new database version
     public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        Tracer.methodEnter(BrainTrackerDatabase.DEBUG_TAG);
-        Tracer.debug(BrainTrackerDatabase.DEBUG_TAG, "onUpgrade old version = " + oldVersion + " new version = " + newVersion);
+        Tracer.methodEnter(BrainTrackerDatabaseImpl.DEBUG_TAG);
+        Tracer.debug(BrainTrackerDatabaseImpl.DEBUG_TAG, "onUpgrade old version = " + oldVersion + " new version = " + newVersion);
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_RESOURCES);
         onCreate(database);
     }

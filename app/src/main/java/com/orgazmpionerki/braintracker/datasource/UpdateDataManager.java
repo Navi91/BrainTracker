@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.dkrasnov.util_android_lib.Tracer;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabase;
+import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datasource.dataresource.DataResourceContainer;
 import com.orgazmpionerki.braintracker.datasource.dataresource.IDataResource;
 import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
@@ -24,7 +24,7 @@ public class UpdateDataManager implements IUpdateRequestListener {
     private UpdateDataRequestExecutor mRequestExecutor;
     private DataResourceContainer mContainer;
     private Context mContext;
-    private BrainTrackerDatabase mDatabase;
+    private BrainTrackerDatabaseImpl mDatabase;
     private Handler mHandler;
     private int mMinUpdateDelay = 10; // in seconds
     private long mUpdatePeriod = 11 * 1000; // in milliseconds
@@ -57,7 +57,7 @@ public class UpdateDataManager implements IUpdateRequestListener {
         }
 
         mIsRunning = true;
-        mDatabase = new BrainTrackerDatabase(mContext);
+        mDatabase = new BrainTrackerDatabaseImpl(mContext);
         mDatabase.open();
         stopUpdateTask();
         startNewUpdateTask();
