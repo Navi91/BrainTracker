@@ -13,17 +13,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
-import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
-import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
-import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequestListener;
+import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.util.TimeManager;
 import com.orgazmpionerki.braintracker.view.ValueTextView;
 
 import java.util.Calendar;
 
-public class StatisticsFrament extends BaseFragment implements IUpdateRequestListener {
+public class StatisticsFrament extends BaseFragment {
     public static final String TAG = "com.orgazmpionerki.braintracker.fragment.charts_fragment";
 
     private final String[] mPeriods = new String[]{"Day", "Week", "Month"};
@@ -33,7 +30,7 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     private ValueTextView mPoints;
     private ValueTextView mTarget;
     private ValueTextView mPercents;
-//    private BrainProgressView mBrainProgressView;
+    //    private BrainProgressView mBrainProgressView;
     private StatisticsPeriod mPeriod;
     private int mTargetValue;
     private int mPointsValue;
@@ -101,19 +98,12 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
     @Override
     public void onResume() {
         super.onResume();
-        UpdateDataManager.getInstance(getActivity()).addListener(this);
         updateContent(null);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        UpdateDataManager.getInstance(getActivity()).removeListener(this);
-    }
-
-    @Override
-    public void onUpdateDone(IUpdateRequest request) {
-        updateContent(null);
     }
 
     @Override
@@ -164,14 +154,11 @@ public class StatisticsFrament extends BaseFragment implements IUpdateRequestLis
 
             switch (mPeriod) {
                 case DAY:
-                    points = mDatabase.getBrainPoints(1);
                     break;
                 case WEEK:
-                    points = mDatabase.getBrainPoints(7);
                     break;
                 case MONTH:
                     int day_in_month = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-                    points = mDatabase.getBrainPoints(day_in_month);
                     break;
                 default:
                     break;

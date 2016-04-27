@@ -5,23 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.activity.MainActivity;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
-import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
-import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequest;
-import com.orgazmpionerki.braintracker.datasource.updaterequest.IUpdateRequestListener;
-import com.orgazmpionerki.braintracker.datasource.updaterequest.UpdateRequest;
+import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.service.PopupService;
-import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
 import com.orgazmpionerki.braintracker.util.Constants;
-import com.orgazmpionerki.braintracker.util.Preferences;
 
-public class NotificationController implements IUpdateRequestListener {
+public class NotificationController {
     private static NotificationController mInstance;
 
     private Context mContext;
@@ -42,13 +35,11 @@ public class NotificationController implements IUpdateRequestListener {
 
     public void onServiceStarted() {
         mDatabase.open();
-        UpdateDataManager.getInstance(mContext).addListener(this);
-        updateNotifications(null);
+        updateNotifications();
     }
 
     public void onServiceStopped() {
         mDatabase.close();
-        UpdateDataManager.getInstance(mContext).removeListener(this);
         removeAndroidNotification();
     }
 
@@ -76,10 +67,6 @@ public class NotificationController implements IUpdateRequestListener {
         return builder.build();
     }
 
-    private void updateNotifications(IUpdateRequest request) {
-        updateAndroidNotification();
-        updatePopupNotification(request);
-    }
 
     private void updateAndroidNotification() {
         Notification androidNotification = createAndroidNotification(getCurrentDayPoints());
@@ -90,19 +77,6 @@ public class NotificationController implements IUpdateRequestListener {
     private void removeAndroidNotification() {
         NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(Constants.NOTIFICATION_ID);
-    }
-
-    private void updatePopupNotification(IUpdateRequest request) {
-        if (!Preferences.getShowPopupNotification(mContext) || request == null) {
-            return;
-        }
-
-        Bundle requestInfo = request.getInfo();
-
-        if (requestInfo != null && requestInfo.containsKey(UpdateRequest.BUNDLE_BEFORE_POINTS)) {
-            Intent popupIntent = createPopupIntent(requestInfo.getInt(UpdateRequest.BUNDLE_BEFORE_POINTS), getCurrentDayPoints());
-            mContext.startService(popupIntent);
-        }
     }
 
     private Intent createPopupIntent(int beforePoints, int afterPoints) {
@@ -125,22 +99,11 @@ public class NotificationController implements IUpdateRequestListener {
         return message;
     }
 
-    private int getCurrentDayPoints() {
-        if (mDatabase != null) {
-            final int requestDays = 1;
-            int points = mDatabase.getBrainPoints(requestDays);
-            return points;
-        }
+    private void updateNotifications() {
 
-        return 0;
     }
 
-    @Override
-    public void onUpdateDone(IUpdateRequest request) {
-        if (!new BrainTrackerServiceController().isServiceRunning(mContext)) {
-            return;
-        }
-
-        updateNotifications(request);
+    private int getCurrentDayPoints() {
+        return 0;
     }
 }

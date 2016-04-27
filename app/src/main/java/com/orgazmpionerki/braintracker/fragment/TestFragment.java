@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.database.BrainTrackerDatabaseImpl;
-import com.orgazmpionerki.braintracker.dataprovider.RequestDataServer;
-import com.orgazmpionerki.braintracker.dataprovider.YouTubeRequestDataServer;
+import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
+import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
+import com.orgazmpionerki.braintracker.datarequest.YouTubeRequestDataServer;
 import com.orgazmpionerki.braintracker.wear.WearController;
 
 /**
@@ -84,7 +84,8 @@ public class TestFragment extends BaseFragment {
         BrainTrackerDatabaseImpl database = new BrainTrackerDatabaseImpl(getActivity());
         database.open();
 
-        mWearController.notifyPointsChanged(database.getBrainPoints(1));
+        // TODO notification
+//        mWearController.notifyPointsChanged(database.getBrainPoints(1));
 
         database.close();
     }

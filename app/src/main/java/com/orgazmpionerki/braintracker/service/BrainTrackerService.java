@@ -7,7 +7,6 @@ import android.os.IBinder;
 
 import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.notification.NotificationController;
-import com.orgazmpionerki.braintracker.datasource.UpdateDataManager;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 
 public class BrainTrackerService extends Service implements WiFiStateChangeListener {
@@ -15,7 +14,6 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
 
     private final static int FOREGROUND_ID = 777;
 
-    private UpdateDataManager mUpdateDataManager;
     private NotificationController mNotificationController;
 
     @Override
@@ -23,7 +21,6 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
         super.onCreate();
         Tracer.methodEnter(DEBUG_TAG);
 
-        mUpdateDataManager = UpdateDataManager.getInstance(this);
         mNotificationController = NotificationController.getInstance(this);
     }
 
@@ -31,7 +28,6 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
     public int onStartCommand(Intent intent, int flags, int startId) {
         Tracer.methodEnter(DEBUG_TAG);
 
-        mUpdateDataManager.start();
         mNotificationController.onServiceStarted();
 //        startForeground(FOREGROUND_ID, mNotificationController.createAndroidNotification());
 
@@ -48,7 +44,6 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
     public void onDestroy() {
         Tracer.methodEnter(DEBUG_TAG);
 
-        mUpdateDataManager.stop();
         mNotificationController.onServiceStopped();
 
         super.onDestroy();
