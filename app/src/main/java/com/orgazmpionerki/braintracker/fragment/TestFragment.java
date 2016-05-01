@@ -11,6 +11,8 @@ import com.braintracker.R;
 import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
 import com.orgazmpionerki.braintracker.datarequest.YouTubeRequestDataServer;
+import com.orgazmpionerki.braintracker.service.BrainTrackerService;
+import com.orgazmpionerki.braintracker.service.controllers.ServiceController;
 import com.orgazmpionerki.braintracker.wear.WearController;
 
 /**
@@ -64,20 +66,30 @@ public class TestFragment extends BaseFragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+//        server.stop();
+        serviceController.stopService(getActivity());
+    }
+
+    @Override
     public void updateContent(Bundle args) {
     }
 
-        RequestDataServer server;
+    RequestDataServer server;
+    ServiceController serviceController;
 
     private void testYoutube() {
-        if (server == null)
-            server = new YouTubeRequestDataServer(getActivity());
-
-        if (server.running()) {
-            server.stop();
-        } else {
-            server.start();
-        }
+        serviceController = new ServiceController(BrainTrackerService.class);
+        serviceController.startService(getActivity());
+//        if (server == null)
+//            server = new YouTubeRequestDataServer(getActivity());
+//
+//        if (server.running()) {
+//            server.stop();
+//        } else {
+//            server.start();
+//        }
     }
 
     private void testWearConnection() {

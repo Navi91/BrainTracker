@@ -9,7 +9,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.orgazmpionerki.braintracker.dataprovider.data.VideoData;
 import com.orgazmpionerki.braintracker.dataprovider.data.ResourceType;
-import com.orgazmpionerki.braintracker.util.MetricsConverter;
+import com.orgazmpionerki.braintracker.util.BrainTrackerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class YouTubeGetVideosInfoRequest extends YouTubeRequest<List<VideoData>>
         String category = video.getSnippet().getCategoryId();
         String title = video.getSnippet().getTitle();
         String length = video.getContentDetails().getDuration();
-        int points = MetricsConverter.getVideoLengthInMinutes(length) * YouTubeProvider.getCategoryValue(category);
+        int points = BrainTrackerUtil.getVideoPoints(category, BrainTrackerUtil.getVideoLengthInMinutes(length));
 
         return VideoData.create(ResourceType.YOUTUBE.getId(), id, category, title, length, points);
     }

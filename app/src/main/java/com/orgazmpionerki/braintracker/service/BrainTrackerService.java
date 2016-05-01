@@ -6,30 +6,32 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.dkrasnov.util_android_lib.Tracer;
+import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
+import com.orgazmpionerki.braintracker.datarequest.YouTubeRequestDataServer;
 import com.orgazmpionerki.braintracker.notification.NotificationController;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 
 public class BrainTrackerService extends Service implements WiFiStateChangeListener {
     public final static String DEBUG_TAG = "brain_tracker_service_debug";
 
-    private final static int FOREGROUND_ID = 777;
-
-    private NotificationController mNotificationController;
+//    private NotificationController notificationController;
+    private RequestDataServer server;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Tracer.methodEnter(DEBUG_TAG);
 
-        mNotificationController = NotificationController.getInstance(this);
+//        notificationController = NotificationController.getInstance(this);
+        server = new YouTubeRequestDataServer(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Tracer.methodEnter(DEBUG_TAG);
 
-        mNotificationController.onServiceStarted();
-//        startForeground(FOREGROUND_ID, mNotificationController.createAndroidNotification());
+//        notificationController.onServiceStarted();
+        server.start();
 
         return START_STICKY;
     }
@@ -44,7 +46,8 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
     public void onDestroy() {
         Tracer.methodEnter(DEBUG_TAG);
 
-        mNotificationController.onServiceStopped();
+//        notificationController.onServiceStopped();
+        server.stop();
 
         super.onDestroy();
     }

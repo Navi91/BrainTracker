@@ -14,8 +14,9 @@ import com.orgazmpionerki.braintracker.activity.MainActivity;
 import com.orgazmpionerki.braintracker.canvas.view.AnimationTextView;
 import com.orgazmpionerki.braintracker.canvas.animator.PowerButtonAnimator;
 import com.orgazmpionerki.braintracker.canvas.animator.ServiceStatusAnimator;
-import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
+import com.orgazmpionerki.braintracker.service.BrainTrackerService;
 import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceController;
+import com.orgazmpionerki.braintracker.service.controllers.ServiceController;
 
 public class ServiceFragment extends BaseFragment {
     public static final String TAG = "com.braintracker.fargment.service_fragment";
@@ -38,7 +39,7 @@ public class ServiceFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBrainServiceController = new BrainTrackerServiceController();
+        mBrainServiceController = new ServiceController(BrainTrackerService.class);
     }
 
     @Override

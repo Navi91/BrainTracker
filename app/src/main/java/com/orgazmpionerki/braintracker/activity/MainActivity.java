@@ -33,8 +33,8 @@ import com.orgazmpionerki.braintracker.notification.OnChangePointsListener;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver;
 import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeListener;
 import com.orgazmpionerki.braintracker.service.BrainTrackerService;
-import com.orgazmpionerki.braintracker.service.controllers.BrainTrackerServiceController;
 import com.orgazmpionerki.braintracker.service.controllers.IBrainServiceController;
+import com.orgazmpionerki.braintracker.service.controllers.ServiceController;
 import com.orgazmpionerki.braintracker.util.Preferences;
 
 import java.util.Calendar;
@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
             getFragmentManager().beginTransaction().replace(R.id.container, testFragment).commit();
         }
 
-        mBrainServiceController = new BrainTrackerServiceController();
-
+        mBrainServiceController = new ServiceController(BrainTrackerService.class);
     }
 
     @Override
