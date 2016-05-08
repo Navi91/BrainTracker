@@ -9,7 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.braintracker.R;
-import com.orgazmpionerki.braintracker.activity.MainActivity;
+import com.orgazmpionerki.braintracker.activity.LogoActivity;
 import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.service.PopupService;
 import com.orgazmpionerki.braintracker.util.Constants;
@@ -43,7 +43,7 @@ public class NotificationController {
         removeAndroidNotification();
     }
 
-    private Notification createAndroidNotification(int points) {
+    public Notification createAndroidNotification(int points) {
         String today_points = "Brain points: ";
 
         if (points > 0) {
@@ -56,9 +56,8 @@ public class NotificationController {
         builder.setSmallIcon(R.drawable.brain);
         builder.setContentTitle(getNotificationMessage());
         builder.setContentText(today_points);
-//        builder.setOngoing(true);
 
-        Intent intent = new Intent(mContext, MainActivity.class);
+        Intent intent = new Intent(mContext, LogoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pending_intent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

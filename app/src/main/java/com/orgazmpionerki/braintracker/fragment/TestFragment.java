@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.braintracker.R;
 import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
-import com.orgazmpionerki.braintracker.datarequest.YouTubeRequestDataServer;
-import com.orgazmpionerki.braintracker.service.BrainTrackerService;
-import com.orgazmpionerki.braintracker.service.controllers.ServiceController;
+import com.orgazmpionerki.braintracker.datarequest.YouTubeAlarmRequestDataServer;
+import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.wear.WearController;
 
 /**
@@ -21,8 +21,9 @@ import com.orgazmpionerki.braintracker.wear.WearController;
 public class TestFragment extends BaseFragment {
     public static final String TAG = "com.braintracker.fargment.test_fragment";
 
-    private boolean mFlag = false;
+    private boolean flag = false;
     private WearController mWearController;
+    private Button startButton;
 
     public static TestFragment newInstance() {
         return new TestFragment();
@@ -37,6 +38,7 @@ public class TestFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         mWearController = new WearController(getActivity());
+        server = YouTubeAlarmRequestDataServer.getInstance(getActivity());
     }
 
     @Override
@@ -44,10 +46,13 @@ public class TestFragment extends BaseFragment {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.test_fragment, null, true);
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        layout.findViewById(R.id.test_button).setOnClickListener(view -> {
-            mFlag = !mFlag;
+        startButton = (Button) layout.findViewById(R.id.test_button);
+
+        startButton.setOnClickListener(view -> {
+            flag = !flag;
             testYoutube();
         });
+        updateStartButton(!Preferences.getServerRunning(getActivity()));
 
         setRetainInstance(true);
         return layout;
@@ -69,7 +74,7 @@ public class TestFragment extends BaseFragment {
     public void onStop() {
         super.onStop();
 //        server.stop();
-        serviceController.stopService(getActivity());
+//        serviceController.stopService(getActivity());
     }
 
     @Override
@@ -77,19 +82,18 @@ public class TestFragment extends BaseFragment {
     }
 
     RequestDataServer server;
-    ServiceController serviceController;
 
     private void testYoutube() {
-        serviceController = new ServiceController(BrainTrackerService.class);
-        serviceController.startService(getActivity());
-//        if (server == null)
-//            server = new YouTubeRequestDataServer(getActivity());
-//
-//        if (server.running()) {
-//            server.stop();
-//        } else {
-//            server.start();
-//        }
+        if (server.running()) {
+            server.stop();
+        } else {
+            server.start();
+        }
+        updateStartButton(!server.running());
+    }
+
+    private void updateStartButton(boolean start) {
+        startButton.setText(start ? "Start test" : "Stop test");
     }
 
     private void testWearConnection() {

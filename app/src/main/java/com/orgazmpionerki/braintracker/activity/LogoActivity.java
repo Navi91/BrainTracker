@@ -3,14 +3,15 @@ package com.orgazmpionerki.braintracker.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.braintracker.R;
-import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.outh2.GoogleAuthToken;
+import com.orgazmpionerki.braintracker.service.TaskService;
+import com.orgazmpionerki.braintracker.util.Preferences;
+
+import java.util.Calendar;
 
 /**
  * Created by Dmitriy on 08.11.2015.
@@ -26,6 +27,14 @@ public class LogoActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        turnOffServerIfNotExecutedTooLong();
+    }
+
+    private void turnOffServerIfNotExecutedTooLong() {
+        if (Calendar.getInstance().getTimeInMillis() - Preferences.getLastUpdateTime(this) > TaskService.DELAY_BETWEEN_REQUEST_MILLISECONDS * 2) {
+            Preferences.setServerRunning(this, false);
         }
     }
 

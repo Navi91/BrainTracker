@@ -1,5 +1,6 @@
 package com.orgazmpionerki.braintracker.service;
 
+import android.app.AlarmManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +15,9 @@ import com.orgazmpionerki.braintracker.receiver.WiFiReceiver.WiFiStateChangeList
 public class BrainTrackerService extends Service implements WiFiStateChangeListener {
     public final static String DEBUG_TAG = "brain_tracker_service_debug";
 
-//    private NotificationController notificationController;
+    private static final int FOREGROUND_ID = 777;
+
+    private NotificationController notificationController;
     private RequestDataServer server;
 
     @Override
@@ -22,7 +25,7 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
         super.onCreate();
         Tracer.methodEnter(DEBUG_TAG);
 
-//        notificationController = NotificationController.getInstance(this);
+        notificationController = NotificationController.getInstance(this);
         server = new YouTubeRequestDataServer(this);
     }
 
@@ -31,6 +34,8 @@ public class BrainTrackerService extends Service implements WiFiStateChangeListe
         Tracer.methodEnter(DEBUG_TAG);
 
 //        notificationController.onServiceStarted();
+        startForeground(FOREGROUND_ID, notificationController.createAndroidNotification(0));
+
         server.start();
 
         return START_STICKY;

@@ -12,48 +12,54 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 public class WiFiReceiver extends BroadcastReceiver {
-	private static List<WiFiStateChangeListener> mListeners;
-	private static WiFiReceiver mInstance;
+    private static List<WiFiStateChangeListener> mListeners;
+    private static WiFiReceiver mInstance;
 
-	public interface WiFiStateChangeListener {
-		public void onWiFiStateChange();
-	}
+    public interface WiFiStateChangeListener {
+        void onWiFiStateChange();
+    }
 
-	public static WiFiReceiver newInstance() {
-		return new WiFiReceiver();
-	}
+    public static WiFiReceiver newInstance() {
+        return new WiFiReceiver();
+    }
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		Tracer.debug("WiFI state change");
-		notifyListeners();
-	}
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Tracer.debug("WiFI state change");
+        notifyListeners();
+    }
 
-	private void notifyListeners() {
-		for (WiFiStateChangeListener listener : mListeners) {
-			listener.onWiFiStateChange();
-		}
-	}
+    private void notifyListeners() {
+        if (mListeners == null) {
+            return;
+        }
 
-	public static void addListener(Context context, WiFiStateChangeListener listener) {
-		if (mListeners != null) {
-			mListeners.add(listener);
-		} else {
-			mInstance = newInstance();
-			context.registerReceiver(mInstance, new IntentFilter(Constants.WIFI_INTENT_FILTER_ACTION));
+        for (WiFiStateChangeListener listener : mListeners) {
+            if (listener != null) {
+                listener.onWiFiStateChange();
+            }
+        }
+    }
 
-			mListeners = new ArrayList<WiFiStateChangeListener>();
-			mListeners.add(listener);
-		}
-	}
+    public static void addListener(Context context, WiFiStateChangeListener listener) {
+        if (mListeners != null) {
+            mListeners.add(listener);
+        } else {
+            mInstance = newInstance();
+            context.registerReceiver(mInstance, new IntentFilter(Constants.WIFI_INTENT_FILTER_ACTION));
 
-	public static void removeListener(Context context, WiFiStateChangeListener listener) {
-		mListeners.remove(listener);
+            mListeners = new ArrayList<WiFiStateChangeListener>();
+            mListeners.add(listener);
+        }
+    }
 
-		if (mListeners.size() == 0) {
-			mListeners = null;
-			context.unregisterReceiver(mInstance);
-			mInstance = null;
-		}
-	}
+    public static void removeListener(Context context, WiFiStateChangeListener listener) {
+        mListeners.remove(listener);
+
+        if (mListeners.size() == 0) {
+            mListeners = null;
+            context.unregisterReceiver(mInstance);
+            mInstance = null;
+        }
+    }
 }

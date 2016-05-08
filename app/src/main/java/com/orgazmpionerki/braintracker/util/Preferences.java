@@ -93,6 +93,16 @@ public class Preferences {
         return getPreferences(context).getBoolean("setting_android_notification_key", false);
     }
 
+    private static final String RUN_SERVER_PREF_KEY = "run_server_pref_key";
+
+    public static boolean getServerRunning(Context context) {
+        return getPreferences(context).getBoolean(RUN_SERVER_PREF_KEY, false);
+    }
+
+    public static void setServerRunning(Context context, boolean run) {
+        getEditor(context).putBoolean(RUN_SERVER_PREF_KEY, run).commit();
+    }
+
     private static final String TOKEN_PREF_KEY = "token_pref_key";
 
     public static String getToken(Context context) {
