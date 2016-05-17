@@ -60,11 +60,7 @@
         </activity>
         <activity android:name="com.orgazmpionerki.braintracker.activity.MainActivity" />
         <activity android:name="com.orgazmpionerki.braintracker.activity.WelcomeActivity" />
-        <activity
-            android:name="com.orgazmpionerki.braintracker.auth.AuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_oauth" />
-        <activity
+               <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 

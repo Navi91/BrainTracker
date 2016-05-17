@@ -18,7 +18,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.orgazmpionerki.braintracker.outh2.GoogleAuthToken;
-import com.orgazmpionerki.braintracker.requests.TokenRequest;
+import com.orgazmpionerki.braintracker.outh2.TokenRequest;
 import com.orgazmpionerki.braintracker.util.Preferences;
 
 /**
