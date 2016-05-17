@@ -7,8 +7,12 @@ import com.dkrasnov.util_android_lib.Tracer;
 import com.dkrasnov.util_android_lib.taskexecutor.RequestExecutor;
 import com.dkrasnov.util_android_lib.taskexecutor.request.HandleErrorRequestCallback;
 import com.dkrasnov.util_android_lib.taskexecutor.request.RequestTask;
+import com.orgazmpionerki.braintracker.dataprovider.BrainTrackerDataProvider;
+import com.orgazmpionerki.braintracker.dataprovider.BrainTrackerDataProviderImpl;
 import com.orgazmpionerki.braintracker.dataprovider.data.VideoData;
 import com.orgazmpionerki.braintracker.datarequest.request.YouTubeGetNewVideoRequest;
+import com.orgazmpionerki.braintracker.tracker.TrackEvent;
+import com.orgazmpionerki.braintracker.tracker.TrackerListenerImpl;
 import com.orgazmpionerki.braintracker.util.Preferences;
 
 import java.util.Calendar;
@@ -22,11 +26,13 @@ public class TaskService extends IntentService {
 
     private Calendar calendar;
     private RequestExecutor requestExecutor;
+    private BrainTrackerDataProvider dataProvider;
 
     public TaskService() {
         super("task service");
         calendar = Calendar.getInstance();
         requestExecutor = new RequestExecutor();
+        dataProvider = BrainTrackerDataProviderImpl.getInstance(this);
     }
 
     @Override
@@ -54,8 +60,11 @@ public class TaskService extends IntentService {
             @Override
             public void onResult(RequestTask<List<VideoData>> requestTask) {
                 if (Preferences.getServerRunning(TaskService.this)) {
-                    // TODO update data
-//                    doIteration();
+                    TrackEvent trackEvent = createEvent(requestTask.getResult());
+                    Intent intent = new Intent(TrackerListenerImpl.TRACK_EVENT_ACTION);
+                    intent.putExtra(TrackerListenerImpl.TRACK_EVENT_EXTRA, trackEvent);
+
+                    TaskService.this.sendBroadcast(intent);
                 }
 
                 Tracer.debug("Update result: \n " + requestTask.getResult().toString());
@@ -64,9 +73,18 @@ public class TaskService extends IntentService {
             @Override
             public void onError(Exception e) {
                 Tracer.debug("Exception when data is updating!!! " + e.getMessage());
-//                doIteration();
             }
         });
         requestExecutor.asyncRequest(currentUpdateRequest);
+    }
+
+    private TrackEvent createEvent(List<VideoData> videos) {
+        int changePoints = 0;
+        for (VideoData videoData : videos) {
+            changePoints = videoData.points;
+        }
+
+        TrackEvent trackEvent = new TrackEvent(changePoints);
+        return trackEvent;
     }
 }

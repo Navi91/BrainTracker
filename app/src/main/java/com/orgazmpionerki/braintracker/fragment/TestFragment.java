@@ -7,11 +7,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.braintracker.R;
+import com.dkrasnov.util_android_lib.ResultListener;
 import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
 import com.orgazmpionerki.braintracker.datarequest.YouTubeAlarmRequestDataServer;
+import com.orgazmpionerki.braintracker.tracker.TrackEvent;
+import com.orgazmpionerki.braintracker.tracker.TrackerListener;
+import com.orgazmpionerki.braintracker.tracker.TrackerListenerImpl;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.wear.WearController;
 
@@ -24,6 +29,8 @@ public class TestFragment extends BaseFragment {
     private boolean flag = false;
     private WearController mWearController;
     private Button startButton;
+    private TrackerListener trackerListener;
+    private TextView pointsTextView;
 
     public static TestFragment newInstance() {
         return new TestFragment();
@@ -39,6 +46,13 @@ public class TestFragment extends BaseFragment {
 
         mWearController = new WearController(getActivity());
         server = YouTubeAlarmRequestDataServer.getInstance(getActivity());
+        trackerListener = new TrackerListenerImpl(getActivity());
+        trackerListener.addListener(new ResultListener<TrackEvent>() {
+            @Override
+            public void onResult(TrackEvent result) {
+                pointsTextView.setText(Integer.toString(result.changePoints));
+            }
+        });
     }
 
     @Override
@@ -46,6 +60,7 @@ public class TestFragment extends BaseFragment {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.test_fragment, null, true);
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        pointsTextView = (TextView) layout.findViewById(R.id.points);
         startButton = (Button) layout.findViewById(R.id.test_button);
 
         startButton.setOnClickListener(view -> {
@@ -62,6 +77,7 @@ public class TestFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         mWearController.connect();
+        trackerListener.onStart();
     }
 
     @Override
@@ -73,6 +89,7 @@ public class TestFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
+        trackerListener.onStop();
 //        server.stop();
 //        serviceController.stopService(getActivity());
     }

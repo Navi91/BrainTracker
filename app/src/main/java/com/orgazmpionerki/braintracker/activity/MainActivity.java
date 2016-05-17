@@ -2,7 +2,6 @@ package com.orgazmpionerki.braintracker.activity;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.braintracker.R;
 import com.dkrasnov.util_android_lib.Tracer;
@@ -22,8 +20,6 @@ import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.orgazmpionerki.braintracker.auth.AuthActivity;
-import com.orgazmpionerki.braintracker.auth.tokens.Tokens;
 import com.orgazmpionerki.braintracker.fragment.BaseFragment;
 import com.orgazmpionerki.braintracker.fragment.ServiceFragment;
 import com.orgazmpionerki.braintracker.fragment.SettingsFragment;
@@ -125,26 +121,6 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         outState.putInt(BUNDLE_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
     }
 
-    public void startAuthorisationForYouTube() {
-        Intent intent = new Intent(this, AuthActivity.class);
-        startActivityForResult(intent, AUTH_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case AUTH_REQUEST:
-                if (resultCode == RESULT_OK) {
-                    processAuthorisationResult(data);
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, getResources().getString(R.string.refused_message), Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (mDrawerResult != null && mDrawerResult.isDrawerOpen()) {
@@ -154,20 +130,9 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         }
     }
 
-    private void processAuthorisationResult(Intent data) {
-        Tokens tokens = (Tokens) data.getSerializableExtra(AuthActivity.EXTRA_TOKENS);
-        traceResult(tokens);
-
-        startBrainTrackerService();
-
-        updateFragmentsContent(null);
-    }
-
     public void attemptToStartBrainTrackerService() {
         if (Preferences.getAccessKey(this) != null) {
             startBrainTrackerService();
-        } else {
-            startAuthorisationForYouTube();
         }
     }
 
@@ -259,10 +224,4 @@ public class MainActivity extends AppCompatActivity implements WiFiStateChangeLi
         window.setStatusBarColor(getResources().getColor(color));
     }
 
-    private void traceResult(Tokens tokens) {
-        Tracer.debug("Got access token: " + tokens.getAccessToken());
-        Tracer.debug("Got refresh token: " + tokens.getRefreshToken());
-        Tracer.debug("Got token type: " + tokens.getTokenType());
-        Tracer.debug("Got expires in: " + tokens.getExpiresIn());
-    }
 }
