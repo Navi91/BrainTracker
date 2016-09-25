@@ -5,8 +5,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
@@ -14,9 +15,13 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
 
 

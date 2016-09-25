@@ -1,6 +1,7 @@
 package com.orgazmpionerki.braintracker.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.braintracker.R;
 import com.dkrasnov.util_android_lib.ResultListener;
+import com.dkrasnov.util_android_lib.Tracer;
 import com.orgazmpionerki.braintracker.dataprovider.database.BrainTrackerDatabaseImpl;
 import com.orgazmpionerki.braintracker.datarequest.RequestDataServer;
 import com.orgazmpionerki.braintracker.datarequest.YouTubeAlarmRequestDataServer;
@@ -19,6 +21,15 @@ import com.orgazmpionerki.braintracker.tracker.TrackerListener;
 import com.orgazmpionerki.braintracker.tracker.TrackerListenerImpl;
 import com.orgazmpionerki.braintracker.util.Preferences;
 import com.orgazmpionerki.braintracker.wear.WearController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Dmitriy on 29.06.2015.
@@ -47,12 +58,7 @@ public class TestFragment extends BaseFragment {
         mWearController = new WearController(getActivity());
         server = YouTubeAlarmRequestDataServer.getInstance(getActivity());
         trackerListener = new TrackerListenerImpl(getActivity());
-        trackerListener.addListener(new ResultListener<TrackEvent>() {
-            @Override
-            public void onResult(TrackEvent result) {
-                pointsTextView.setText(Integer.toString(result.changePoints));
-            }
-        });
+        trackerListener.addListener(result -> pointsTextView.setText(Integer.toString(result.changePoints)));
     }
 
     @Override
